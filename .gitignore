@@ -1,0 +1,8 @@
+# Local / tooling
+.DS_Store
+.claude/
+
+# Not part of the live site
+_archive/
+index.v1-backup.html
+*_gwr_video_mvp.mp4

@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#090909">
+  <title>Leads — VIDZN</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23090909%27/%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%277%27 fill=%27%23b7ff3c%27/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#090909; --surface:#111; --surface-2:#171717; --text:#f5f5f2; --muted:#8b8b88;
+      --line:rgba(255,255,255,.1); --line2:rgba(255,255,255,.18); --accent:#b7ff3c; --ease:cubic-bezier(.16,1,.3,1);
+      --hot:#ff7a59; --warm:#ffc94d; --cold:#6f8cff;
+      --s-new:#b7ff3c; --s-contacted:#7cc4ff; --s-proposal:#ffc94d; --s-won:#4ade80; --s-lost:#6b6b68;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Manrope,system-ui,sans-serif;min-height:100vh}
+    button,input,textarea,select{font:inherit;color:inherit}
+    button{cursor:pointer}
+    a{color:inherit}
+    :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+    .mono{font:500 11px/1.4 DM Mono,monospace;letter-spacing:.12em;text-transform:uppercase}
+    .muted{color:var(--muted)}
+    .wrap{width:min(calc(100% - 40px),1440px);margin:auto}
+    .btn{border:1px solid var(--line2);background:transparent;border-radius:99px;padding:10px 16px;font-weight:700;font-size:13px;display:inline-flex;align-items:center;gap:8px;transition:.3s var(--ease);text-decoration:none;white-space:nowrap}
+    .btn:hover{border-color:var(--text)}
+    .btn.primary{background:var(--text);color:#070707;border-color:var(--text)}
+    .btn.primary:hover{background:var(--accent);border-color:var(--accent)}
+    .btn.accent{background:var(--accent);color:#070707;border-color:var(--accent)}
+    .btn:disabled{opacity:.5;pointer-events:none}
+
+    /* Connect */
+    .connect{min-height:100vh;display:grid;place-items:center;padding:40px 20px;position:relative;overflow:hidden}
+    .connect:before{content:"";position:absolute;width:800px;height:800px;right:-300px;top:-300px;border-radius:50%;background:radial-gradient(circle,rgba(183,255,60,.1),transparent 62%)}
+    .connect-card{position:relative;width:min(100%,480px)}
+    .brand{font-size:22px;font-weight:800;letter-spacing:-.06em}
+    .brand b{color:var(--accent)}
+    .connect h1{font-size:clamp(3.5rem,11vw,5.6rem);line-height:.82;letter-spacing:-.08em;margin:40px 0 18px}
+    .connect p{color:var(--muted);line-height:1.55;margin:0 0 34px}
+    .field{margin-bottom:22px}
+    .field label{display:block;color:#777;margin-bottom:9px}
+    .field input{width:100%;background:transparent;border:0;border-bottom:1px solid #444;padding:11px 0;font-size:17px;outline:0;border-radius:0}
+    .field input:focus{border-color:var(--accent)}
+    .check{display:flex;gap:10px;align-items:center;color:#999;font-size:14px;margin:6px 0 28px}
+    .check input{accent-color:var(--accent);width:16px;height:16px}
+    .connect-actions{display:flex;gap:10px;flex-wrap:wrap}
+    .connect-error{color:#ff8a7a;min-height:22px;margin-top:18px;font-size:14px}
+
+    /* App */
+    .app{display:none}
+    .app.show{display:block}
+    header.top{position:sticky;top:0;z-index:20;background:rgba(9,9,9,.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+    header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0}
+    .top-left{display:flex;align-items:center;gap:16px}
+    .top-left .tag{padding:6px 10px;border:1px solid var(--line2);border-radius:99px;color:#999}
+    .top-left .tag.demo{border-color:var(--warm);color:var(--warm)}
+    .top-right{display:flex;gap:8px;align-items:center}
+    .sync{color:#666;margin-right:6px}
+
+    .head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;padding:50px 0 34px}
+    .head h1{font-size:clamp(3rem,7vw,6rem);line-height:.82;letter-spacing:-.075em;margin:14px 0 0}
+    .head h1 span{color:#4a4a47}
+
+    .stats{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+    .stat{padding:22px 22px 20px;border-right:1px solid var(--line);background:var(--surface)}
+    .stat:last-child{border-right:0}
+    .stat small{display:block;color:#777;margin-bottom:16px}
+    .stat b{display:block;font-size:clamp(2rem,3.4vw,3rem);letter-spacing:-.06em;line-height:1}
+    .stat em{font-style:normal;color:#777;font-size:13px}
+    .stat.accent b{color:var(--accent)}
+    .stat.hot b{color:var(--hot)}
+
+    .pipeline{margin:26px 0 8px}
+    .pipe-bar{display:flex;height:10px;border-radius:99px;overflow:hidden;background:#1b1b1b;gap:2px}
+    .pipe-bar span{transition:flex-grow .6s var(--ease);min-width:0}
+    .pipe-legend{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:14px;color:#999}
+    .pipe-legend i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:8px;vertical-align:1px}
+
+    .toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin:34px 0 16px}
+    .tabs{display:flex;gap:6px;flex-wrap:wrap}
+    .tabs button{border:1px solid var(--line);background:transparent;border-radius:99px;padding:9px 14px;color:#999;font-size:13px;font-weight:600;transition:.25s}
+    .tabs button:hover{color:var(--text);border-color:var(--line2)}
+    .tabs button.on{background:var(--text);color:#070707;border-color:var(--text)}
+    .tabs button span{opacity:.55;margin-left:6px;font-weight:500}
+    .filters{display:flex;gap:8px;flex-wrap:wrap}
+    .search{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:99px;padding:0 14px;min-width:240px}
+    .search input{background:transparent;border:0;outline:0;padding:10px 0;width:100%;font-size:14px}
+    select{background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:9px 14px;font-size:13px;outline:0}
+
+    .list{border:1px solid var(--line);border-radius:20px;overflow:hidden;margin-bottom:80px}
+    .row{display:grid;grid-template-columns:18px minmax(180px,1.4fr) 1fr 110px 120px 120px 110px 120px;gap:16px;align-items:center;padding:18px 22px;border-bottom:1px solid var(--line);cursor:pointer;transition:background .2s;background:transparent;border-left:0;border-right:0;border-top:0;text-align:left;width:100%}
+    .row:last-child{border-bottom:0}
+    .row:hover{background:rgba(255,255,255,.03)}
+    .row.head-row{cursor:default;background:var(--surface);color:#777;padding-top:14px;padding-bottom:14px}
+    .row.head-row:hover{background:var(--surface)}
+    .row.unread .who b:after{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent);margin-left:8px;vertical-align:3px}
+    .pdot{width:10px;height:10px;border-radius:50%}
+    .who b{display:block;font-size:15px;letter-spacing:-.01em}
+    .who small{color:#777;font-size:13px}
+    .cell{font-size:13px;color:#bbb;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .cell.m{font:500 11px DM Mono,monospace;letter-spacing:.08em;color:#999}
+    .pill{display:inline-flex;align-items:center;gap:7px;padding:6px 10px;border-radius:99px;font:500 10px DM Mono,monospace;letter-spacing:.1em;text-transform:uppercase;background:rgba(255,255,255,.05);border:1px solid var(--line)}
+    .pill i{width:6px;height:6px;border-radius:50%}
+    .empty{padding:80px 20px;text-align:center;color:#777}
+    .empty b{display:block;font-size:28px;letter-spacing:-.05em;color:var(--text);margin-bottom:8px}
+
+    /* Drawer */
+    .scrim{position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.55);opacity:0;visibility:hidden;transition:.4s var(--ease)}
+    .scrim.show{opacity:1;visibility:visible}
+    .drawer{position:fixed;z-index:50;top:0;right:0;bottom:0;width:min(100%,620px);background:#0e0e0e;border-left:1px solid var(--line);transform:translateX(100%);transition:transform .6s var(--ease);display:flex;flex-direction:column}
+    .drawer.show{transform:none}
+    .d-top{display:flex;justify-content:space-between;align-items:center;padding:18px 26px;border-bottom:1px solid var(--line)}
+    .d-close{width:42px;height:42px;border-radius:50%;border:1px solid var(--line2);background:transparent;font-size:22px}
+    .d-body{flex:1;overflow-y:auto;padding:30px 26px 40px}
+    .d-body h2{font-size:clamp(2.4rem,6vw,3.6rem);line-height:.9;letter-spacing:-.07em;margin:14px 0 8px}
+    .d-sub{color:#999;margin:0 0 26px}
+    .d-actions{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:30px}
+    .status-set{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:10px 0 30px}
+    .status-set button{border:1px solid var(--line);background:transparent;border-radius:12px;padding:12px 6px;font:500 10px DM Mono,monospace;letter-spacing:.1em;text-transform:uppercase;color:#999;transition:.25s}
+    .status-set button:hover{border-color:var(--line2);color:var(--text)}
+    .status-set button.on{color:#070707;border-color:transparent}
+    .facts{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}
+    .facts div{padding:16px 0;border-bottom:1px solid var(--line)}
+    .facts div:nth-child(odd){padding-right:16px}
+    .facts div:nth-child(even){padding-left:16px;border-left:1px solid var(--line)}
+    .facts small{display:block;color:#666;margin-bottom:7px}
+    .facts span{font-size:15px;word-break:break-word}
+    .msg{margin:28px 0;padding:20px;border-radius:16px;background:var(--surface-2);line-height:1.65;white-space:pre-wrap;color:#ddd}
+    .notes textarea{width:100%;min-height:120px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;resize:vertical;line-height:1.5;outline:0}
+    .notes textarea:focus{border-color:var(--accent)}
+    .notes-foot{display:flex;justify-content:space-between;align-items:center;margin-top:10px;color:#666}
+    .toast{position:fixed;z-index:60;left:50%;bottom:26px;translate:-50% 20px;opacity:0;background:var(--text);color:#070707;padding:12px 18px;border-radius:99px;font-weight:700;font-size:14px;transition:.4s var(--ease);pointer-events:none}
+    .toast.show{opacity:1;translate:-50% 0}
+
+    @media (max-width:1100px){
+      .row{grid-template-columns:14px 1fr 110px 110px}
+      .row .c-company,.row .c-budget,.row .c-timeline,.row .c-received{display:none}
+    }
+    @media (max-width:760px){
+      .wrap{width:min(calc(100% - 28px),1440px)}
+      .stats{grid-template-columns:1fr 1fr}
+      .stat{border-bottom:1px solid var(--line)}
+      .stat:nth-child(2n){border-right:0}
+      .stat:last-child{grid-column:1/-1}
+      .top-right .sync,.top-right .hide-sm{display:none}
+      .row{grid-template-columns:12px 1fr auto;padding:16px}
+      .row .c-package{display:none}
+      .search{min-width:0;flex:1}
+      .status-set{grid-template-columns:repeat(3,1fr)}
+      .facts{grid-template-columns:1fr}
+      .facts div:nth-child(n){padding:14px 0;border-left:0}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Connect screen -->
+  <section class="connect" id="connect">
+    <div class="connect-card">
+      <div class="brand">VIDZN<b>●</b> <span class="mono muted" style="margin-left:8px">Leads</span></div>
+      <h1>YOUR<br>PIPELINE.</h1>
+      <p>Every enquiry from the website, in one place. Connect to your Google Sheet backend with the admin key you set in the Apps Script.</p>
+      <form id="connect-form">
+        <div class="field"><label class="mono" for="c-endpoint">Backend URL</label><input id="c-endpoint" placeholder="https://script.google.com/macros/s/…/exec" autocomplete="off" required></div>
+        <div class="field"><label class="mono" for="c-key">Admin key</label><input id="c-key" type="password" autocomplete="current-password" required></div>
+        <label class="check"><input type="checkbox" id="c-remember" checked> Remember on this device</label>
+        <div class="connect-actions">
+          <button class="btn primary" type="submit" id="c-go">Open dashboard →</button>
+          <button class="btn" type="button" id="c-demo">Preview with demo data</button>
+        </div>
+        <div class="connect-error" id="c-error" role="alert"></div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Dashboard -->
+  <div class="app" id="app">
+    <header class="top">
+      <div class="wrap">
+        <div class="top-left">
+          <div class="brand">VIDZN<b>●</b></div>
+          <span class="tag mono" id="mode-tag">Live</span>
+        </div>
+        <div class="top-right">
+          <span class="sync mono" id="sync">—</span>
+          <button class="btn" id="refresh" type="button">↻ Refresh</button>
+          <button class="btn hide-sm" id="export" type="button">Export CSV</button>
+          <button class="btn" id="signout" type="button">Sign out</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <div class="head">
+        <div><div class="mono muted" id="today"></div><h1>LEADS<br><span id="head-count">0 ENQUIRIES</span></h1></div>
+      </div>
+
+      <div class="stats">
+        <div class="stat accent"><small class="mono">Needs reply</small><b id="st-new">0</b><em>status: new</em></div>
+        <div class="stat"><small class="mono">This week</small><b id="st-week">0</b><em id="st-week-sub">last 7 days</em></div>
+        <div class="stat hot"><small class="mono">Hot leads</small><b id="st-hot">0</b><em>open, high intent</em></div>
+        <div class="stat"><small class="mono">In proposal</small><b id="st-prop">0</b><em>awaiting decision</em></div>
+        <div class="stat"><small class="mono">Win rate</small><b id="st-win">—</b><em id="st-win-sub">won vs lost</em></div>
+      </div>
+
+      <div class="pipeline">
+        <div class="pipe-bar" id="pipe-bar"></div>
+        <div class="pipe-legend mono" id="pipe-legend"></div>
+      </div>
+
+      <div class="toolbar">
+        <div class="tabs" id="tabs"></div>
+        <div class="filters">
+          <label class="search"><span class="muted">⌕</span><input id="q" placeholder="Search name, company, email…" aria-label="Search leads"></label>
+          <select id="f-priority" aria-label="Priority"><option value="">All priorities</option><option>Hot</option><option>Warm</option><option>Cold</option></select>
+          <select id="f-package" aria-label="Package"><option value="">All solutions</option><option>START</option><option>LAUNCH</option><option>SCALE</option><option>PARTNER</option><option>Not sure yet</option></select>
+        </div>
+      </div>
+
+      <div class="list" id="list"></div>
+    </main>
+
+    <div class="scrim" id="scrim"></div>
+    <aside class="drawer" id="drawer" aria-hidden="true" aria-labelledby="d-name">
+      <div class="d-top"><span class="mono muted" id="d-id"></span><button class="d-close" id="d-close" aria-label="Close">×</button></div>
+      <div class="d-body" id="d-body"></div>
+    </aside>
+    <div class="toast" id="toast" role="status"></div>
+  </div>
+
+  <script src="vidzn-config.js"></script>
+  <script>
+    (() => {
+      "use strict";
+      const $ = (s, r = document) => r.querySelector(s);
+      const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+      const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+
+      const STATUSES = ["New", "Contacted", "Proposal", "Won", "Lost"];
+      const S_COLOR = { New:"var(--s-new)", Contacted:"var(--s-contacted)", Proposal:"var(--s-proposal)", Won:"var(--s-won)", Lost:"var(--s-lost)" };
+      const P_COLOR = { Hot:"var(--hot)", Warm:"var(--warm)", Cold:"var(--cold)" };
+      const STORE = "vidzn-leads-auth";
+
+      let auth = null;          // { endpoint, key } — or { demo:true }
+      let leads = [];
+      let view = { tab:"All", q:"", priority:"", pkg:"" };
+      let openId = null;
+
+      /* ---------------- storage (best-effort) ---------------- */
+      const store = {
+        get() { try { return JSON.parse(localStorage.getItem(STORE) || sessionStorage.getItem(STORE) || "null"); } catch { return null; } },
+        set(v, remember) { try { (remember ? localStorage : sessionStorage).setItem(STORE, JSON.stringify(v)); } catch {} },
+        clear() { try { localStorage.removeItem(STORE); sessionStorage.removeItem(STORE); } catch {} },
+      };
+
+      /* ---------------- API ---------------- */
+      // JSON sent as text/plain keeps it a "simple" request (no CORS preflight, which Apps Script can't answer).
+      const api = async (action, extra = {}) => {
+        if (auth.demo) return demoApi(action, extra);
+        const res = await fetch(auth.endpoint, { method:"POST", body: JSON.stringify({ action, key: auth.key, ...extra }) });
+        const data = await res.json().catch(() => ({ ok:false, error:"Unexpected response — check the URL ends in /exec." }));
+        if (!data.ok) throw new Error(data.error || "Request failed");
+        return data;
+      };
+
+      /* ---------------- connect ---------------- */
+      const connectForm = $("#connect-form");
+      $("#c-endpoint").value = (window.VIDZN_CONFIG && window.VIDZN_CONFIG.FORM_ENDPOINT) || "";
+      connectForm.addEventListener("submit", async e => {
+        e.preventDefault();
+        const endpoint = $("#c-endpoint").value.trim(), key = $("#c-key").value;
+        if (!/^(https:\/\/|http:\/\/localhost[:/])/.test(endpoint)) { $("#c-error").textContent = "Paste the full https:// Web App URL."; return; }
+        $("#c-go").disabled = true; $("#c-error").textContent = "";
+        auth = { endpoint, key };
+        try {
+          await load();
+          store.set(auth, $("#c-remember").checked);
+          enter();
+        } catch (err) {
+          auth = null;
+          $("#c-error").textContent = err.message === "Unauthorized" ? "That admin key doesn't match the one in your Apps Script." : "Couldn't connect: " + err.message;
+        } finally { $("#c-go").disabled = false; }
+      });
+      $("#c-demo").addEventListener("click", async () => { auth = { demo:true }; await load(); enter(); });
+      $("#signout").addEventListener("click", () => { store.clear(); auth = null; leads = []; $("#app").classList.remove("show"); $("#connect").style.display = ""; $("#c-key").value = ""; });
+
+      const enter = () => {
+        $("#connect").style.display = "none";
+        $("#app").classList.add("show");
+        $("#mode-tag").textContent = auth.demo ? "Demo data" : "Live";
+        $("#mode-tag").classList.toggle("demo", !!auth.demo);
+        render();
+      };
+
+      /* ---------------- data ---------------- */
+      const load = async () => {
+        const data = await api("list");
+        leads = data.leads || [];
+        $("#sync").textContent = "Synced " + new Date().toLocaleTimeString([], { hour:"2-digit", minute:"2-digit" });
+      };
+      const refresh = async () => {
+        const b = $("#refresh"); b.disabled = true;
+        try { await load(); render(); if (openId) openLead(openId, true); }
+        catch (err) { toast("Refresh failed: " + err.message); }
+        finally { b.disabled = false; }
+      };
+      $("#refresh").addEventListener("click", refresh);
+      setInterval(() => { if (auth && !document.hidden) refresh(); }, 60000);
+
+      /* ---------------- render ---------------- */
+      const DAY = 864e5;
+      const ago = iso => {
+        const d = new Date(iso), diff = Date.now() - d;
+        if (diff < 36e5) return Math.max(1, Math.round(diff / 6e4)) + "m ago";
+        if (diff < DAY) return Math.round(diff / 36e5) + "h ago";
+        if (diff < 7 * DAY) return Math.round(diff / DAY) + "d ago";
+        return d.toLocaleDateString([], { day:"numeric", month:"short" });
+      };
+      const count = f => leads.filter(f).length;
+
+      const renderStats = () => {
+        $("#today").textContent = new Date().toLocaleDateString([], { weekday:"long", day:"numeric", month:"long" });
+        $("#head-count").textContent = `${leads.length} ${leads.length === 1 ? "ENQUIRY" : "ENQUIRIES"}`;
+        $("#st-new").textContent = count(l => l.status === "New");
+        const week = count(l => Date.now() - new Date(l.received) < 7 * DAY);
+        const prevWeek = count(l => { const d = Date.now() - new Date(l.received); return d >= 7 * DAY && d < 14 * DAY; });
+        $("#st-week").textContent = week;
+        $("#st-week-sub").textContent = prevWeek ? `${week >= prevWeek ? "▲" : "▼"} vs ${prevWeek} prior week` : "last 7 days";
+        $("#st-hot").textContent = count(l => l.priority === "Hot" && !["Won","Lost"].includes(l.status));
+        $("#st-prop").textContent = count(l => l.status === "Proposal");
+        const won = count(l => l.status === "Won"), lost = count(l => l.status === "Lost");
+        $("#st-win").textContent = won + lost ? Math.round(won / (won + lost) * 100) + "%" : "—";
+        $("#st-win-sub").textContent = `${won} won · ${lost} lost`;
+
+        $("#pipe-bar").innerHTML = STATUSES.map(s => `<span style="flex-grow:${count(l => l.status === s)};background:${S_COLOR[s]}" title="${s}"></span>`).join("");
+        $("#pipe-legend").innerHTML = STATUSES.map(s => `<span><i style="background:${S_COLOR[s]}"></i>${s} ${count(l => l.status === s)}</span>`).join("");
+        $("#tabs").innerHTML = ["All", ...STATUSES].map(s =>
+          `<button type="button" data-tab="${s}" class="${view.tab === s ? "on" : ""}">${s}<span>${s === "All" ? leads.length : count(l => l.status === s)}</span></button>`).join("");
+      };
+
+      const filtered = () => {
+        const q = view.q.toLowerCase();
+        const rank = { Hot:0, Warm:1, Cold:2 };
+        return leads.filter(l =>
+          (view.tab === "All" || l.status === view.tab) &&
+          (!view.priority || l.priority === view.priority) &&
+          (!view.pkg || l.package === view.pkg) &&
+          (!q || [l.name, l.company, l.email, l.message, l.id, l.services].join(" ").toLowerCase().includes(q))
+        ).sort((a, b) => (a.status === "New") !== (b.status === "New") ? (a.status === "New" ? -1 : 1)
+          : view.tab === "New" ? rank[a.priority] - rank[b.priority] || new Date(b.received) - new Date(a.received)
+          : new Date(b.received) - new Date(a.received));
+      };
+
+      const renderList = () => {
+        const rows = filtered();
+        const head = `<div class="row head-row mono"><span></span><span>Lead</span><span class="c-company">Services</span><span class="c-package">Solution</span><span class="c-budget">Budget</span><span class="c-timeline">Timeline</span><span class="c-received">Received</span><span>Status</span></div>`;
+        if (!rows.length) {
+          $("#list").innerHTML = head + `<div class="empty"><b>${leads.length ? "Nothing matches." : "No leads yet."}</b>${leads.length ? "Try clearing the filters." : "New website enquiries will land here automatically."}</div>`;
+          return;
+        }
+        $("#list").innerHTML = head + rows.map(l => `
+          <button type="button" class="row ${l.status === "New" ? "unread" : ""}" data-id="${esc(l.id)}">
+            <span class="pdot" style="background:${P_COLOR[l.priority] || "#555"}" title="${esc(l.priority)} priority"></span>
+            <span class="who"><b>${esc(l.name)}</b><small>${esc(l.company || l.email)}</small></span>
+            <span class="cell c-company">${esc(l.services || "—")}</span>
+            <span class="cell m c-package">${esc(l.package || "—")}</span>
+            <span class="cell c-budget">${esc(l.budget || "—")}</span>
+            <span class="cell c-timeline">${esc(l.timeline || "—")}</span>
+            <span class="cell m c-received">${ago(l.received)}</span>
+            <span><span class="pill"><i style="background:${S_COLOR[l.status] || "#555"}"></i>${esc(l.status)}</span></span>
+          </button>`).join("");
+      };
+
+      const render = () => { renderStats(); renderList(); };
+
+      $("#tabs").addEventListener("click", e => { const b = e.target.closest("[data-tab]"); if (b) { view.tab = b.dataset.tab; render(); } });
+      $("#q").addEventListener("input", e => { view.q = e.target.value; renderList(); });
+      $("#f-priority").addEventListener("change", e => { view.priority = e.target.value; renderList(); });
+      $("#f-package").addEventListener("change", e => { view.pkg = e.target.value; renderList(); });
+      $("#list").addEventListener("click", e => { const r = e.target.closest(".row[data-id]"); if (r) openLead(r.dataset.id); });
+
+      /* ---------------- drawer ---------------- */
+      const drawer = $("#drawer"), scrim = $("#scrim");
+      const closeDrawer = () => { drawer.classList.remove("show"); scrim.classList.remove("show"); drawer.setAttribute("aria-hidden","true"); openId = null; };
+      $("#d-close").addEventListener("click", closeDrawer);
+      scrim.addEventListener("click", closeDrawer);
+      addEventListener("keydown", e => { if (e.key === "Escape") closeDrawer(); });
+
+      const openLead = (id, keepScroll) => {
+        const l = leads.find(x => x.id === id);
+        if (!l) return closeDrawer();
+        openId = id;
+        const first = (l.name || "").split(/\s+/)[0];
+        const phoneDigits = String(l.phone || "").replace(/\D/g, "");
+        const mail = `mailto:${encodeURIComponent(l.email)}?subject=${encodeURIComponent("Re: your VIDZN enquiry")}&body=${encodeURIComponent(`Hi ${first},\n\nThanks for reaching out about ${l.company || "your project"}.\n\n`)}`;
+        const facts = [["Solution", l.package], ["Priority", l.priority], ["Services", l.services], ["Budget", l.budget], ["Timeline", l.timeline],
+          ["Email", l.email], ["Phone", l.phone], ["Company", l.company], ["Website", l.website], ["Source", l.source],
+          ["Received", new Date(l.received).toLocaleString([], { dateStyle:"medium", timeStyle:"short" })], ["Updated", l.updated ? ago(l.updated) : "—"]];
+        const scroll = $("#d-body").scrollTop;
+        $("#d-id").textContent = l.id;
+        $("#d-body").innerHTML = `
+          <span class="pill"><i style="background:${P_COLOR[l.priority] || "#555"}"></i>${esc(l.priority)} lead</span>
+          <h2 id="d-name">${esc(l.name)}</h2>
+          <p class="d-sub">${esc([l.company, l.package].filter(Boolean).join(" · ") || l.email)}</p>
+          <div class="d-actions">
+            <a class="btn accent" href="${mail}">Reply by email ↗</a>
+            ${phoneDigits ? `<a class="btn" href="https://wa.me/${phoneDigits}" target="_blank" rel="noopener">WhatsApp ↗</a>` : ""}
+            <button class="btn" type="button" data-copy="${esc(l.email)}">Copy email</button>
+          </div>
+          <div class="mono muted">Status</div>
+          <div class="status-set">${STATUSES.map(s => `<button type="button" data-status="${s}" class="${l.status === s ? "on" : ""}" style="${l.status === s ? `background:${S_COLOR[s]}` : ""}">${s}</button>`).join("")}</div>
+          <div class="facts">${facts.map(([k, v]) => `<div><small class="mono">${k}</small><span>${esc(v || "—")}</span></div>`).join("")}</div>
+          ${l.message ? `<div class="msg">${esc(l.message)}</div>` : ""}
+          <div class="notes">
+            <div class="mono muted" style="margin-bottom:10px">Internal notes</div>
+            <textarea id="d-notes" placeholder="Call notes, next steps, quote sent…">${esc(l.notes)}</textarea>
+            <div class="notes-foot"><span class="mono" id="notes-state">Only visible to your team</span><button class="btn" type="button" id="save-notes">Save notes</button></div>
+          </div>`;
+        if (keepScroll) $("#d-body").scrollTop = scroll;
+        drawer.classList.add("show"); scrim.classList.add("show"); drawer.setAttribute("aria-hidden","false");
+        if (!keepScroll) $("#d-close").focus();
+      };
+
+      const update = async (id, patch, msg) => {
+        const l = leads.find(x => x.id === id);
+        const before = { ...l };
+        Object.assign(l, patch, { updated: new Date().toISOString() });
+        render(); openLead(id, true);
+        try { await api("update", { id, ...patch }); toast(msg); }
+        catch (err) { Object.assign(l, before); render(); openLead(id, true); toast("Couldn't save: " + err.message); }
+      };
+
+      $("#d-body").addEventListener("click", e => {
+        const s = e.target.closest("[data-status]");
+        if (s && openId) return update(openId, { status: s.dataset.status }, `Moved to ${s.dataset.status}`);
+        const c = e.target.closest("[data-copy]");
+        if (c) { navigator.clipboard?.writeText(c.dataset.copy).then(() => toast("Email copied")); return; }
+        if (e.target.closest("#save-notes") && openId) update(openId, { notes: $("#d-notes").value }, "Notes saved");
+      });
+
+      /* ---------------- export ---------------- */
+      $("#export").addEventListener("click", () => {
+        const cols = ["id","received","status","priority","name","email","phone","company","website","package","services","budget","timeline","message","source","notes"];
+        const csv = [cols.join(","), ...filtered().map(l => cols.map(c => `"${String(l[c] ?? "").replace(/"/g, '""')}"`).join(","))].join("\n");
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(new Blob([csv], { type:"text/csv" }));
+        a.download = `vidzn-leads-${new Date().toISOString().slice(0,10)}.csv`;
+        a.click();
+        setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+      });
+
+      let toastTimer;
+      const toast = msg => { const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove("show"), 2200); };
+
+      /* ---------------- demo data ---------------- */
+      let demo = null;
+      const demoApi = async (action, extra) => {
+        if (!demo) {
+          const h = n => new Date(Date.now() - n * 36e5).toISOString();
+          demo = [
+            { id:"VZ-2026-0014", received:h(2), status:"New", priority:"Hot", name:"Aarav Mehta", email:"aarav@example.com", phone:"+91 98200 00000", company:"Kiln Coffee Co.", website:"kilncoffee.example", package:"LAUNCH", services:"Identity, Packaging, Website", budget:"₹7L+", timeline:"Within a month", message:"We're opening our first two cafés in Bandra and Indiranagar and launching retail packs at the same time. Need the whole brand — identity, bags, cups, site — ready before the opening.", source:"services-page", notes:"", updated:h(2) },
+            { id:"VZ-2026-0013", received:h(9), status:"New", priority:"Warm", name:"Sana Kapoor", email:"sana@example.com", phone:"", company:"Sutra Skin", website:"@sutraskin", package:"SCALE", services:"Social content, Motion & video", budget:"₹1L - ₹3L", timeline:"1-3 months", message:"Monthly content support for our skincare line. Our feed feels inconsistent.", source:"services-page", notes:"", updated:h(9) },
+            { id:"VZ-2026-0012", received:h(30), status:"Contacted", priority:"Warm", name:"Rohan Iyer", email:"rohan@example.com", phone:"+91 99000 00000", company:"Northbound Labs", website:"", package:"START", services:"Brand strategy, Identity", budget:"₹1L - ₹3L", timeline:"ASAP", message:"Seed-stage SaaS, need a proper brand before our raise.", source:"home-contact", notes:"Intro call Thursday 4pm.", updated:h(20) },
+            { id:"VZ-2026-0011", received:h(52), status:"Proposal", priority:"Hot", name:"Meera Nair", email:"meera@example.com", phone:"", company:"Tala Foods", website:"talafoods.example", package:"PARTNER", services:"Campaign, Packaging, AI creative", budget:"₹7L+", timeline:"Within a month", message:"Looking for an ongoing creative partner across 3 product lines.", source:"services-page", notes:"Proposal sent — 6-month retainer.", updated:h(26) },
+            { id:"VZ-2026-0010", received:h(100), status:"New", priority:"Cold", name:"Dev Patel", email:"dev@example.com", phone:"", company:"", website:"", package:"Not sure yet", services:"Website", budget:"Not sure", timeline:"Just exploring", message:"Just getting quotes for a portfolio site.", source:"home-contact", notes:"", updated:h(100) },
+            { id:"VZ-2026-0009", received:h(190), status:"Won", priority:"Hot", name:"Ishita Rao", email:"ishita@example.com", phone:"", company:"Maharaj Samosa", website:"", package:"LAUNCH", services:"Packaging, Campaign", budget:"₹3L - ₹7L", timeline:"ASAP", message:"Packaging refresh + launch campaign.", source:"services-page", notes:"Signed. Kickoff done.", updated:h(150) },
+            { id:"VZ-2026-0008", received:h(260), status:"Lost", priority:"Cold", name:"Kabir Singh", email:"kabir@example.com", phone:"", company:"Loop Fitness", website:"", package:"START", services:"Identity", budget:"Under ₹1L", timeline:"1-3 months", message:"Logo for a gym.", source:"home-contact", notes:"Budget mismatch.", updated:h(230) },
+            { id:"VZ-2026-0007", received:h(340), status:"Won", priority:"Warm", name:"Nisha Verma", email:"nisha@example.com", phone:"", company:"Flowrian", website:"", package:"SCALE", services:"Social content", budget:"₹1L - ₹3L", timeline:"Within a month", message:"Content system for our digital channels.", source:"services-page", notes:"3-month retainer started.", updated:h(300) },
+          ];
+        }
+        if (action === "list") return { ok:true, leads: demo.map(l => ({ ...l })) };
+        if (action === "update") { Object.assign(demo.find(l => l.id === extra.id) || {}, extra, { updated:new Date().toISOString() }); return { ok:true }; }
+        return { ok:false, error:"Unknown action" };
+      };
+
+      /* ---------------- boot ---------------- */
+      const saved = store.get();
+      if (saved && saved.endpoint) {
+        auth = saved;
+        load().then(enter).catch(() => { auth = null; store.clear(); $("#c-endpoint").value = saved.endpoint; });
+      }
+    })();
+  </script>
+</body>
+</html>

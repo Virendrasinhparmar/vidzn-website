@@ -1,0 +1,1686 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#090909">
+  <meta name="description" content="VIDZN — Brand, digital and creative direction for ambitious businesses.">
+  <title>VIDZN — We Design What's Next.</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23090909%27/%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%277%27 fill=%27%23b7ff3c%27/%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#090909; --surface:#111; --surface-2:#171717; --text:#f5f5f2;
+      --muted:#8b8b88; --line:rgba(255,255,255,.11); --line2:rgba(255,255,255,.18);
+      --accent:#b7ff3c; --max:1500px; --ease:cubic-bezier(.16,1,.3,1);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;background:var(--bg)}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Manrope,system-ui,sans-serif;overflow-x:hidden}
+    body.lock{overflow:hidden}
+    a{color:inherit;text-decoration:none}
+    button,input,textarea{font:inherit}
+    button{cursor:pointer}
+    ::selection{background:var(--accent);color:#050505}
+    ::-webkit-scrollbar{width:6px}
+    ::-webkit-scrollbar-track{background:var(--bg)}
+    ::-webkit-scrollbar-thumb{background:#303030;border-radius:99px}
+
+    .noise{position:fixed;inset:-50%;z-index:9997;pointer-events:none;opacity:.06;mix-blend-mode:screen;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:grain 1s steps(6) infinite}
+    @keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-4%,3%)}40%{transform:translate(3%,-5%)}60%{transform:translate(-2%,6%)}80%{transform:translate(5%,-2%)}100%{transform:translate(0,0)}}
+    :focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+
+    /* Smooth scroll (Lenis) */
+    html.lenis,html.lenis body{height:auto}
+    .lenis.lenis-smooth{scroll-behavior:auto!important}
+    .lenis.lenis-stopped{overflow:hidden}
+    [data-lenis-prevent]{overscroll-behavior:contain}
+
+    /* Split-line text reveals */
+    .split-line{display:block;overflow:hidden;padding:.12em 0 .06em;margin:-.12em 0 -.06em}
+    .split-line>span{display:block;transform:translateY(105%);transition:transform 1.1s var(--ease);transition-delay:calc(var(--l,0) * 90ms)}
+    .visible .split-line>span,.split-line.in>span{transform:none}
+
+    /* Magnetic buttons */
+    .magnetic{transition:translate .5s var(--ease),transform .45s var(--ease),background .45s,border-color .45s,color .45s}
+    .magnetic.pulling{transition:translate .12s linear,background .45s,border-color .45s,color .45s}
+    .progress{position:fixed;z-index:10000;left:0;top:0;width:0;height:3px;background:var(--accent)}
+    .container{width:min(calc(100% - 48px),var(--max));margin:auto}
+    .mono{font:500 11px/1 DM Mono,monospace;letter-spacing:.14em;text-transform:uppercase}
+    .muted{color:var(--muted)}
+    .eyebrow{display:flex;align-items:center;gap:12px;color:var(--muted);margin-bottom:28px}
+    .eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--accent);display:block;box-shadow:0 0 18px rgba(183,255,60,.7)}
+    .display{font-size:clamp(4.5rem,11vw,11.5rem);line-height:.82;letter-spacing:-.075em;font-weight:800}
+    .title{font-size:clamp(3rem,7vw,7rem);line-height:.88;letter-spacing:-.065em;word-spacing:.1em;font-weight:800}
+    .body-xl{font-size:clamp(1.2rem,2.1vw,2rem);line-height:1.3}
+    .btn{border:1px solid var(--line2);border-radius:999px;padding:16px 22px;background:transparent;color:var(--text);display:inline-flex;align-items:center;gap:10px;transition:.45s var(--ease);font-weight:700}
+    .btn:hover{transform:translateY(-3px);border-color:var(--text)}
+    .btn.primary{background:var(--text);color:#050505;border-color:var(--text)}
+    .btn.primary:hover{background:var(--accent);border-color:var(--accent)}
+    .btn.primary .arrow{background:#090909;color:var(--text)}
+    .btn.primary:hover .arrow{color:var(--accent)}
+    .arrow{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--text);color:var(--bg)}
+    .section{padding:150px 0;border-top:1px solid var(--line)}
+    .reveal{opacity:0;transform:translateY(45px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+    .reveal.visible{opacity:1;transform:none}
+    .stagger>*{transition-delay:calc(var(--i) * 80ms)}
+
+    /* Loader */
+    #loader{position:fixed;inset:0;z-index:10001;background:#f5f5f2;color:#090909;display:grid;place-items:center;transition:transform 1s var(--ease)}
+    #loader.done{transform:translateY(-100%)}
+    .loader-inner{width:min(90vw,800px)}
+    .loader-brand{font-size:clamp(4rem,14vw,12rem);line-height:.8;letter-spacing:-.08em;font-weight:800;display:flex;overflow:hidden;padding-bottom:.05em}
+    .loader-brand span{display:block;transform:translateY(110%);animation:loaderIn .9s var(--ease) forwards;animation-delay:calc(var(--i) * 70ms + 100ms)}
+    @keyframes loaderIn{to{transform:none}}
+    #loader.done .loader-inner{transform:translateY(-40px);opacity:0;transition:.6s var(--ease)}
+    .loader-row{display:flex;align-items:center;gap:14px;margin-top:34px}
+    .loader-track{height:2px;flex:1;background:#d3d3d0}
+    .loader-bar{height:100%;width:0;background:#090909;transition:width .15s linear}
+    #loader-num{font:500 12px DM Mono,monospace}
+
+    /* Nav */
+    nav.site-nav{position:fixed;z-index:9000;top:0;left:0;right:0;padding:24px 0;transition:.5s var(--ease)}
+    nav.site-nav.scrolled{background:rgba(9,9,9,.78);backdrop-filter:blur(18px);border-bottom:1px solid var(--line);padding:14px 0}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between}
+    .logo{font-size:22px;font-weight:800;letter-spacing:-.06em}
+    .logo b{color:var(--accent)}
+    .nav-links{display:flex;gap:32px;color:#aaa;font-size:13px}
+    .nav-links a{position:relative;padding:6px 0;transition:color .3s}
+    .nav-links a:after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--accent);transform:scaleX(0);transform-origin:right;transition:transform .5s var(--ease)}
+    .nav-links a:hover:after,.nav-links a:focus-visible:after,.nav-links a[aria-current]:after{transform:scaleX(1);transform-origin:left}
+    .nav-links a:hover,.nav-links a:focus-visible{color:var(--text)}
+    .nav-cta{display:flex;align-items:center;gap:10px}
+    .menu-btn{display:none;border:1px solid var(--line);background:rgba(20,20,20,.7);color:var(--text);border-radius:50%;width:46px;height:46px}
+    .menu-btn span{display:block;width:18px;height:1px;background:currentColor;margin:4px auto;transition:.3s}
+
+    /* Hero — scroll-scrubbed video */
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    .hero-video{position:relative;height:400vh;background:#090909}
+    .hero-video-pin{position:sticky;top:0;min-height:680px;height:100svh;display:flex;align-items:flex-end;padding:180px 0 65px;overflow:hidden}
+    .hero-video-el{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;background:#0c0c0c}
+    .hero-video-scrim{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(9,9,9,.55) 0%,rgba(9,9,9,0) 20%,rgba(9,9,9,0) 82%,rgba(9,9,9,.4) 100%)}
+    .hero-video-progress{position:absolute;left:0;right:0;bottom:0;height:3px;background:rgba(255,255,255,.08);z-index:5}
+    .hero-video-progress-bar{height:100%;width:0%;background:var(--accent)}
+    .hero-grid{position:absolute;inset:0;z-index:2;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:100px 100px;mask-image:linear-gradient(to bottom,#000,transparent 85%)}
+    .orb{position:absolute;z-index:2;border-radius:50%;filter:blur(100px);pointer-events:none;opacity:.35}
+    .orb.a{width:500px;height:500px;background:#a7ff33;right:-160px;top:12%;opacity:.10}
+    .orb.b{width:400px;height:400px;background:#705cff;left:-220px;bottom:8%;opacity:.10}
+    .hero-copy-scrim{position:absolute;inset:0;z-index:2;pointer-events:none;background:radial-gradient(ellipse at 30% 75%,rgba(9,9,9,.85),rgba(9,9,9,.45) 55%,rgba(9,9,9,.25));will-change:opacity}
+    .hero-copy{position:relative;z-index:4;will-change:transform,opacity}
+    .hero-top{display:flex;justify-content:space-between;gap:20px;color:#a5a5a1;margin-bottom:34px}
+    .hero-top .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent);margin-right:10px;box-shadow:0 0 16px var(--accent);animation:pulse 2s ease-in-out infinite}
+    @keyframes pulse{50%{opacity:.35}}
+    .hero-title{margin:0}
+    .hero-title em{font-style:normal;color:var(--accent)}
+    .hero-bottom{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-top:40px;padding-top:28px;border-top:1px solid var(--line2)}
+    .hero-bottom p{margin:0;max-width:430px;color:#bdbdb8;font-size:clamp(1rem,1.3vw,1.2rem);line-height:1.5}
+    .hero-scroll-cue{position:absolute;z-index:4;left:50%;bottom:26px;translate:-50% 0;width:1px;height:48px;background:linear-gradient(var(--line2),transparent);overflow:hidden}
+    .hero-scroll-cue:after{content:"";position:absolute;left:0;top:-40%;width:1px;height:40%;background:var(--accent);animation:cue 1.8s var(--ease) infinite}
+    @keyframes cue{to{top:110%}}
+    body:not(.loaded) .hero-title .split-line>span{transform:translateY(105%)}
+    body:not(.loaded) .hero-fade{opacity:0;transform:translateY(20px)}
+    .hero-fade{transition:opacity 1s var(--ease) .5s,transform 1s var(--ease) .5s}
+
+    /* Marquee */
+    .marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;padding:25px 0;background:#0d0d0d}
+    .track{display:flex;width:max-content;animation:marquee 28s linear infinite}
+    .track.js-driven{animation:none;will-change:transform}
+    .track span{font-size:clamp(2.4rem,5vw,5rem);font-weight:800;letter-spacing:-.06em;white-space:nowrap;padding-right:55px;color:#30302f}
+    .track span b{color:var(--accent);font-size:.45em;vertical-align:middle;margin:0 25px}
+    @keyframes marquee{to{transform:translateX(-50%)}}
+
+    /* Work */
+    .section-head{display:grid;grid-template-columns:1fr 360px;gap:60px;align-items:end;margin-bottom:75px}
+    .section-head p{color:var(--muted);font-size:17px;line-height:1.55;margin:0}
+    .work-list{display:grid;grid-template-columns:repeat(12,1fr);gap:70px 24px}
+    .project{grid-column:span 7;position:relative}
+    .project:nth-child(2){grid-column:7 / span 6;margin-top:150px}
+    .project:nth-child(3){grid-column:2 / span 7}
+    .project:nth-child(4){grid-column:8 / span 5;margin-top:120px}
+    .project{cursor:pointer}
+    .project-card{position:relative;aspect-ratio:4/5;border-radius:24px;overflow:hidden;background:var(--surface);border:1px solid var(--line);clip-path:inset(10% 6% 10% 6% round 24px);transition:clip-path 1.4s var(--ease)}
+    .project.visible .project-card{clip-path:inset(0 0 0 0 round 24px)}
+    .project-card img{width:100%;height:118%;margin-top:-9%;object-fit:cover;display:block;filter:saturate(.65);transform:translate3d(0,var(--py,0px),0);scale:var(--s,1.18);transition:scale 1.6s var(--ease),filter .7s}
+    .project.visible .project-card img{--s:1}
+    .project:hover .project-card img,.project:focus-visible .project-card img{scale:1.045;filter:saturate(1)}
+    .project-tag{position:absolute;left:22px;bottom:22px;z-index:2;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:99px;background:rgba(9,9,9,.6);backdrop-filter:blur(10px);border:1px solid var(--line2);font:500 10px DM Mono,monospace;letter-spacing:.14em;opacity:0;translate:0 10px;transition:.5s var(--ease)}
+    .project-tag i{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+    .project:hover .project-tag,.project:focus-visible .project-tag{opacity:1;translate:0 0}
+    .project-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.8),transparent 55%);opacity:.45;transition:.5s}
+    .project:hover .project-overlay{opacity:.8}
+    .project-meta{display:flex;justify-content:space-between;gap:20px;padding:20px 0}
+    .project-meta h3{margin:0;font-size:clamp(1.8rem,3vw,3rem);letter-spacing:-.05em}
+    .project-meta p{margin:8px 0 0;color:var(--muted);font:11px DM Mono,monospace;text-transform:uppercase;letter-spacing:.12em}
+    .project-number{color:#555;font:11px DM Mono,monospace}
+
+    /* About statement */
+    .statement{min-height:80vh;display:flex;align-items:center;background:var(--surface);position:relative;overflow:hidden}
+    .statement:before{content:"";position:absolute;width:60vw;height:60vw;right:-30vw;top:-20vw;border-radius:50%;background:radial-gradient(circle,rgba(183,255,60,.09),transparent 65%)}
+    .statement h2{max-width:1250px;margin:0;font-size:clamp(3.5rem,8vw,8rem);line-height:.9;letter-spacing:-.07em;position:relative}
+    .statement h2 span{color:#50504d}
+    .statement h2 .w{color:#2e2e2c;transition:color .35s}
+    .statement h2 .w.on{color:var(--text)}
+    .statement h2 .w.on.hl{color:var(--accent)}
+
+    /* Capabilities */
+    .cap-grid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line)}
+    .cap{min-height:330px;padding:35px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;flex-direction:column;justify-content:space-between;transition:.5s var(--ease)}
+    .cap:nth-child(3n){border-right:0}
+    .cap:hover{background:var(--surface);transform:translateY(-4px)}
+    .cap{justify-content:flex-start!important}
+    .cap-go{margin-bottom:56px;align-self:flex-end;width:44px;height:44px;border-radius:50%;border:1px solid var(--line2);display:grid;place-items:center;color:var(--muted);transition:.5s var(--ease)}
+    .cap:hover .cap-go{background:var(--accent);border-color:var(--accent);color:#070707;rotate:45deg}
+    .cap-list{list-style:none;display:flex;flex-wrap:wrap;gap:6px;margin:22px 0 0;padding:0}
+    .cap-list li{padding:7px 11px;border:1px solid var(--line);border-radius:99px;font:500 10px DM Mono,monospace;letter-spacing:.1em;text-transform:uppercase;color:#888;transition:.4s var(--ease)}
+    .cap:hover .cap-list li{border-color:var(--line2);color:var(--text)}
+    .cap h3{font-size:clamp(1.8rem,3vw,3rem);letter-spacing:-.055em;margin:0 0 14px}
+    .cap p{color:var(--muted);line-height:1.55;margin:0;max-width:360px}
+
+    /* Process */
+    .process{display:grid;grid-template-columns:360px 1fr;gap:90px}
+    .process-intro{position:sticky;top:120px;height:max-content}
+    .process-intro h2{margin:0 0 20px}
+    .steps{border-top:1px solid var(--line)}
+    .step{display:grid;grid-template-columns:70px 1fr 1fr;gap:25px;padding:38px 0;border-bottom:1px solid var(--line);align-items:start}
+    .step-no{color:#555}
+    .step h3{font-size:32px;letter-spacing:-.04em;margin:0}
+    .step p{color:var(--muted);line-height:1.55;margin:0}
+
+    /* Solutions */
+    .solutions{background:var(--text);color:#090909;border-radius:36px 36px 0 0;padding:130px 0}
+    .solutions .eyebrow{color:#666}
+    .solution-list{border-top:1px solid rgba(0,0,0,.18)}
+    .solution{display:grid;grid-template-columns:80px 1fr 1.1fr 55px;gap:25px;align-items:center;padding:34px 0;border-bottom:1px solid rgba(0,0,0,.18);transition:.4s var(--ease)}
+    .solution:hover{padding-left:18px;padding-right:18px;background:rgba(0,0,0,.035)}
+    .solution .num{color:#777;font:12px DM Mono,monospace}
+    .solution h3{margin:0;font-size:clamp(2rem,4vw,4.2rem);letter-spacing:-.065em}
+    .solution p{margin:0;color:#666;line-height:1.45}
+    .solution .go{width:50px;height:50px;border:1px solid #aaa;border-radius:50%;display:grid;place-items:center;transition:.4s}
+    .solution:hover .go,.solution:focus-visible .go{background:var(--accent);border-color:var(--accent);color:#090909;transform:rotate(45deg)}
+    .solution{position:relative;width:100%;background:transparent;border:0;border-bottom:1px solid rgba(0,0,0,.18);border-radius:0;color:inherit;font:inherit;text-align:left}
+    .solution:after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .7s var(--ease)}
+    .solution:hover:after,.solution:focus-visible:after{transform:scaleX(1)}
+    .solution h3 .roll{height:1em;line-height:1em;padding-right:.08em}
+    .solution h3 .roll:after{color:#3f6212}
+    .solution:hover .num{color:#090909}
+
+    /* Testimonial */
+    .quote{padding:180px 0}
+    .quote blockquote{font-size:clamp(2.4rem,5vw,5.8rem);line-height:.98;letter-spacing:-.06em;margin:0;max-width:1250px}
+    .quote footer{margin-top:50px;color:var(--muted);font:12px DM Mono,monospace;text-transform:uppercase;letter-spacing:.12em}
+
+    /* CTA */
+    .cta{padding:180px 0 120px;text-align:center;position:relative;overflow:hidden}
+    .cta:before{content:"";position:absolute;width:650px;height:650px;left:50%;top:30%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(183,255,60,.12),transparent 68%)}
+    .cta h2{font-size:clamp(4rem,10vw,10rem);line-height:.8;letter-spacing:-.075em;margin:0 auto 55px;position:relative}
+    .cta h2 .outline{color:transparent;-webkit-text-stroke:1px #666}
+    .cta .btn{position:relative}
+
+    /* Footer */
+    footer.site-footer{border-top:1px solid var(--line);padding:35px 0 50px;overflow-x:clip}
+    .footer-top{display:flex;justify-content:space-between;gap:30px;align-items:flex-end}
+    .footer-brand{position:relative;font-size:clamp(5rem,14vw,14rem);font-weight:800;line-height:.75;letter-spacing:-.09em;color:#1f1f1e;user-select:none;-webkit-user-select:none}
+    .footer-brand.ready .fb-text{color:transparent}
+    .footer-brand canvas{position:absolute;left:-90px;top:-90px;width:calc(100% + 180px);height:calc(100% + 180px);pointer-events:none}
+    .fb-hint{position:absolute;left:0;top:calc(100% + 18px);color:#555;white-space:nowrap;opacity:0;transition:opacity .8s var(--ease)}
+    .footer-brand.ready .fb-hint{opacity:1}
+    .footer-brand.played .fb-hint{opacity:0}
+    .footer-side{flex:0 0 min(480px,40%);display:flex;flex-direction:column;gap:14px}
+    .footer-nav{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}
+    .footer-nav a{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px 4px;border-bottom:1px solid var(--line);color:#8f8f8b;font-size:clamp(1.05rem,1.4vw,1.35rem);font-weight:700;letter-spacing:-.03em;position:relative;transition:color .4s var(--ease)}
+    .footer-nav a:nth-child(odd){padding-right:22px;border-right:1px solid var(--line)}
+    .footer-nav a:nth-child(even){padding-left:22px}
+    .footer-nav a:after{content:"";position:absolute;left:0;bottom:-1px;height:1px;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .6s var(--ease)}
+    .footer-nav a:nth-child(even):after{left:22px;width:calc(100% - 22px)}
+    .footer-nav a:nth-child(odd):after{width:calc(100% - 22px)}
+    .footer-nav a:hover,.footer-nav a:focus-visible{color:var(--text)}
+    .footer-nav a:hover:after,.footer-nav a:focus-visible:after{transform:scaleX(1)}
+    .footer-nav i{font-style:normal;font-size:14px;width:30px;height:30px;border-radius:50%;border:1px solid var(--line2);display:grid;place-items:center;color:#777;transition:.5s var(--ease)}
+    .footer-nav a:hover i,.footer-nav a:focus-visible i{background:var(--accent);border-color:var(--accent);color:#070707;rotate:45deg}
+    .roll{position:relative;display:inline-block;overflow:hidden;height:1.2em;line-height:1.2em;vertical-align:bottom}
+    .roll>span{display:block;transition:transform .55s var(--ease)}
+    .roll:after{content:attr(data-t);position:absolute;left:0;top:100%;white-space:nowrap;color:var(--accent);transition:transform .55s var(--ease)}
+    :is(a,button):is(:hover,:focus-visible) .roll>span,:is(a,button):is(:hover,:focus-visible) .roll:after{transform:translateY(-100%)}
+    .footer-cta{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:20px 22px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(135deg,rgba(183,255,60,.06),transparent 60%),var(--surface)}
+    .footer-cta .btn{flex-shrink:0;white-space:nowrap}
+    .footer-cta .mono{color:var(--accent)}
+    .footer-cta p{margin:8px 0 0;color:#8f8f8b;font-size:13px;line-height:1.5;max-width:230px}
+    .to-top{border:0;background:transparent;color:#666;padding:0;display:inline-flex;gap:10px;align-items:center;transition:color .3s}
+    .to-top span{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;border:1px solid var(--line2);transition:.4s var(--ease)}
+    .to-top:hover{color:var(--text)}
+    .to-top:hover span{background:var(--accent);border-color:var(--accent);color:#070707;translate:0 -3px}
+    .footer-bottom{display:flex;justify-content:space-between;gap:20px;border-top:1px solid var(--line);margin-top:70px;padding-top:22px;color:#666;font:11px DM Mono,monospace;text-transform:uppercase}
+
+    /* Cursor */
+    #cursor{position:fixed;z-index:10000;width:14px;height:14px;border-radius:50%;background:var(--text);pointer-events:none;mix-blend-mode:difference;transform:translate(-50%,-50%);transition:width .25s var(--ease),height .25s var(--ease),background .25s;display:none}
+    #cursor.active{width:76px;height:76px;background:var(--accent);mix-blend-mode:normal}
+    #cursor:after{content:attr(data-label);position:absolute;inset:0;display:grid;place-items:center;font:700 9px DM Mono,monospace;color:#080808;text-align:center;opacity:0}
+
+    /* Mobile menu */
+    .mobile-menu{position:fixed;inset:0;z-index:8000;background:#090909;padding:110px 24px 40px;display:flex;flex-direction:column;justify-content:space-between;transform:translateY(-100%);transition:transform .8s var(--ease)}
+    .mobile-menu.open{transform:none}
+    .mobile-menu nav{display:flex;flex-direction:column}
+    .mobile-menu nav a{font-size:clamp(3rem,13vw,6rem);font-weight:800;line-height:.95;letter-spacing:-.07em;padding:8px 0;border-bottom:1px solid var(--line)}
+    .mobile-menu .mobile-bottom{display:flex;justify-content:space-between;align-items:end;color:#777}
+
+    /* Modal */
+    .modal{position:fixed;inset:0;z-index:9500;background:#0a0a0a;overflow:auto;opacity:0;visibility:hidden;transform:translateY(25px);transition:.6s var(--ease)}
+    .modal.open{opacity:1;visibility:visible;transform:none}
+    .modal-close{position:fixed;z-index:2;right:24px;top:24px;width:52px;height:52px;border-radius:50%;border:1px solid var(--line2);background:rgba(10,10,10,.6);backdrop-filter:blur(12px);color:var(--text);font-size:25px}
+    .modal-inner{width:min(calc(100% - 48px),1200px);margin:auto;padding:130px 0 100px}
+    .modal-hero{aspect-ratio:16/9;border-radius:28px;overflow:hidden;background:var(--surface);margin:40px 0 65px}
+    .modal-hero img{width:100%;height:100%;object-fit:cover}
+    .modal-grid{display:grid;grid-template-columns:1fr 320px;gap:80px}
+    .modal-grid h2{font-size:38px;letter-spacing:-.05em;margin-top:0}
+    .modal-grid p{color:#aaa;font-size:19px;line-height:1.7}
+    .modal-side{border-left:1px solid var(--line);padding-left:30px}
+    .modal-side div{padding:0 0 25px;margin-bottom:25px;border-bottom:1px solid var(--line)}
+    .modal-side small{display:block;color:#666;font:11px DM Mono,monospace;text-transform:uppercase;margin-bottom:9px}
+    .modal-side strong{font-size:17px}
+
+    .contact-modal .modal-inner{max-width:900px}
+    .contact-modal h2{font-size:clamp(4rem,10vw,9rem);line-height:.78;letter-spacing:-.08em;margin:0 0 25px}
+    .form{margin-top:65px}
+    .field{margin-bottom:34px}
+    .field label{display:block;color:#666;font:11px DM Mono,monospace;text-transform:uppercase;letter-spacing:.12em;margin-bottom:12px}
+    .field input,.field textarea{width:100%;border:0;border-bottom:1px solid #444;background:transparent;color:white;padding:14px 0;font-size:21px;outline:0;border-radius:0}
+    .field textarea{min-height:130px;resize:vertical}
+    .field input:focus,.field textarea:focus{border-color:var(--accent)}
+
+
+    /* How a brand is born — scroll-driven build: spark → position → identity → system → impact */
+    .story{position:relative;height:520vh;background:#060606;border-top:1px solid var(--line)}
+    .story-pin{position:sticky;top:0;height:100svh;min-height:640px;overflow:hidden;display:flex;align-items:center}
+    .story-pin:before{content:"";position:absolute;width:60vw;height:60vw;right:-12vw;top:50%;translate:0 -50%;border-radius:50%;background:radial-gradient(circle,rgba(183,255,60,calc(.05 + var(--glow,0) * .09)),transparent 62%);pointer-events:none}
+    .story-layout{position:relative;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(40px,6vw,110px);align-items:center}
+    .story-label{display:flex;align-items:center;gap:12px;color:var(--muted);margin-bottom:34px}
+    .story-label i{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 16px var(--accent)}
+
+    .chapters{list-style:none;margin:0;padding:0 0 0 28px;position:relative}
+    .chapters:before,.chapters:after{content:"";position:absolute;left:0;top:6px;bottom:6px;width:1px;background:var(--line2)}
+    .chapters:after{background:var(--accent);bottom:auto;height:calc((100% - 12px) * var(--prog,0));box-shadow:0 0 12px var(--accent)}
+    .chapter{padding:14px 0;color:#4d4d4a;transition:color .5s var(--ease)}
+    .chapter .ch-k{display:flex;align-items:center;gap:10px;font:500 11px DM Mono,monospace;letter-spacing:.16em;text-transform:uppercase}
+    .chapter .ch-k:before{content:"";position:absolute;left:-4px;width:9px;height:9px;border-radius:50%;background:#060606;border:1px solid #444;transition:.4s var(--ease)}
+    .chapter h3{margin:10px 0 0;font-size:clamp(1.15rem,1.6vw,1.45rem);letter-spacing:-.03em;font-weight:700;line-height:1.1;transition:font-size .7s var(--ease),letter-spacing .7s var(--ease),color .5s}
+    .chapter h3 span{color:inherit;opacity:.55}
+    .ch-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .7s var(--ease)}
+    .ch-body>div{overflow:hidden}
+    .ch-body p{margin:18px 0 4px;max-width:470px;color:#9a9a96;font-size:clamp(1rem,1.15vw,1.12rem);line-height:1.6;opacity:0;translate:0 12px;transition:.6s var(--ease)}
+    .chapter.done{color:#77776f}
+    .chapter.done .ch-k:before{background:#77776f;border-color:#77776f}
+    .chapter.on{color:var(--text)}
+    .chapter.on .ch-k{color:var(--accent)}
+    .chapter.on .ch-k:before{background:var(--accent);border-color:var(--accent);box-shadow:0 0 14px var(--accent)}
+    .chapter.on h3{font-size:clamp(2.2rem,3.7vw,3.9rem);letter-spacing:-.06em;line-height:.95}
+    .chapter.on h3 span{opacity:.45}
+    .chapter.on .ch-body{grid-template-rows:1fr}
+    .chapter.on .ch-body p{opacity:1;translate:0 0;transition-delay:.15s}
+
+    /* The stage */
+    .stage{--S:min(600px,72vh,46vw);position:relative;width:var(--S);height:var(--S);margin-left:auto;font-size:calc(var(--S) / 600 * 16px)}
+    .stage>*{position:absolute}
+    .st-grid{inset:0;border-radius:32px;border:1px solid var(--line);background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:10% 10%;background-position:center;mask-image:radial-gradient(circle,#000 30%,transparent 75%)}
+    .st-corner{font:500 .62em DM Mono,monospace;letter-spacing:.16em;color:#555}
+    .st-corner.tl{left:4%;top:4%}.st-corner.br{right:4%;bottom:4%;color:var(--accent)}
+    .st-ring{left:50%;top:50%;border-radius:50%;border:1px solid rgba(255,255,255,.14);translate:-50% -50%}
+    .st-ring.r1{width:30%;height:30%;border-color:rgba(183,255,60,.55)}
+    .st-ring.r2{width:56%;height:56%}
+    .st-ring.r3{width:82%;height:82%;border-style:dashed}
+    .st-axis{left:50%;top:50%;background:rgba(255,255,255,.16)}
+    .st-axis.h{width:88%;height:1px;translate:-50% 0}
+    .st-axis.v{height:88%;width:1px;translate:0 -50%}
+    .st-tag{font:500 .66em DM Mono,monospace;letter-spacing:.16em;color:#aaa;padding:.5em .8em;border:1px solid var(--line2);border-radius:99px;background:#0b0b0b;white-space:nowrap}
+    .st-tag.t1{left:50%;top:3%;translate:-50% 0}.st-tag.t2{right:1%;top:50%;translate:0 -50%}
+    .st-tag.t3{left:50%;bottom:3%;translate:-50% 0}.st-tag.t4{left:1%;top:50%;translate:0 -50%}
+    .st-dot{left:50%;top:50%;width:3.2%;height:3.2%;margin:-1.6% 0 0 -1.6%;border-radius:50%;background:var(--accent);box-shadow:0 0 30px 6px rgba(183,255,60,.55)}
+    .st-dot:after{content:"";position:absolute;inset:-120%;border-radius:50%;border:1px solid rgba(183,255,60,.5);animation:ping 2.2s var(--ease) infinite}
+    @keyframes ping{from{scale:.3;opacity:1}to{scale:1.6;opacity:0}}
+    .st-mark{left:50%;top:50%;width:30%;height:30%;margin:-15% 0 0 -15%;border-radius:26%;background:var(--text);overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+    .mk{position:absolute;inset:0}
+    .mk:before{content:"";position:absolute;width:56%;height:56%;left:14%;bottom:14%;border-radius:50%;background:var(--accent)}
+    .mk:after{content:"";position:absolute;width:14%;height:62%;right:22%;top:19%;border-radius:99px;background:#090909;rotate:28deg}
+    .st-kit{left:50%;top:50%;display:flex;align-items:center;gap:.9em}
+    .st-kit.swatch{translate:-50% 0;margin-top:calc(var(--S) * .22)}
+    .st-kit.swatch i{width:2.2em;height:2.2em;border-radius:50%;border:1px solid var(--line2)}
+    .st-kit.type{translate:0 -50%;margin-left:calc(var(--S) * .21);flex-direction:column;align-items:flex-start;gap:.2em}
+    .st-kit.type b{font-size:3.2em;letter-spacing:-.06em;line-height:1}
+    .st-kit.type small{font:500 .6em DM Mono,monospace;letter-spacing:.14em;color:#777}
+    .st-kit.grid-note{translate:-100% -50%;margin-left:calc(var(--S) * -.21);font:500 .62em DM Mono,monospace;letter-spacing:.14em;color:#777;text-align:right;line-height:1.7}
+    .st-tile{left:50%;top:50%;width:29%;height:25%;margin:-12.5% 0 0 -14.5%;border-radius:18px;background:linear-gradient(150deg,#1b1b1b,#0e0e0e);border:1px solid var(--line2);overflow:hidden;transition:border-color .5s,box-shadow .5s,background .5s}
+    .st-tile .mk{inset:auto;width:34%;aspect-ratio:1;left:10%;top:14%;border-radius:26%;background:var(--text)}
+    .st-tile span{position:absolute;left:10%;bottom:12%;font:500 .6em DM Mono,monospace;letter-spacing:.14em;color:#999}
+    .st-tile i{position:absolute;right:10%;top:16%;width:34%;height:6%;border-radius:9px;background:#2a2a2a;box-shadow:0 1.1em 0 #222,0 2.2em 0 #222}
+    .st-tile.lit{border-color:rgba(183,255,60,.7);box-shadow:0 0 0 1px rgba(183,255,60,.35),0 20px 60px rgba(183,255,60,.12);background:linear-gradient(150deg,#1f2415,#0e0e0e)}
+    .st-tile.lit span{color:var(--accent)}
+    .st-chart{left:4%;right:4%;bottom:6%;height:24%}
+    .st-chart svg{width:100%;height:100%;overflow:visible}
+    .st-chart path{fill:none;stroke:var(--accent);stroke-width:2.5;stroke-linecap:round;filter:drop-shadow(0 0 8px rgba(183,255,60,.6))}
+    .st-chart .area{fill:url(#chartFill);stroke:none;filter:none}
+    .st-chart small{position:absolute;right:0;top:-1.6em;font:500 .62em DM Mono,monospace;letter-spacing:.16em;color:var(--accent)}
+
+    /* Brands we're building */
+    .clients{padding:130px 0 120px;border-top:1px solid var(--line)}
+    .clients-head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:50px}
+    .clients-head h2{margin:0;font-size:clamp(1.6rem,2.6vw,2.6rem);letter-spacing:-.05em;line-height:1.05;max-width:620px}
+    .clients-head h2 span{color:#5c5c59}
+    .client-list{border-top:1px solid var(--line)}
+    .client-row{display:grid;grid-template-columns:1fr auto auto;gap:30px;align-items:center;width:100%;padding:clamp(18px,2.2vw,28px) 0;border:0;border-bottom:1px solid var(--line);background:transparent;color:#3d3d3a;text-align:left;position:relative;overflow:hidden;transition:color .45s var(--ease),padding .5s var(--ease)}
+    .client-row b{font-size:clamp(2.2rem,6vw,6rem);letter-spacing:-.07em;line-height:.9;font-weight:800;transition:translate .6s var(--ease)}
+    .client-row em{font:500 11px DM Mono,monospace;font-style:normal;letter-spacing:.14em;text-transform:uppercase;color:#666;transition:color .4s}
+    .client-row .go{width:52px;height:52px;border-radius:50%;border:1px solid var(--line2);display:grid;place-items:center;color:var(--text);opacity:0;scale:.6;transition:.5s var(--ease)}
+    .client-row:hover,.client-row:focus-visible{color:var(--text)}
+    .client-row:hover b,.client-row:focus-visible b{translate:18px 0}
+    .client-row:hover em{color:var(--accent)}
+    .client-row:hover .go,.client-row:focus-visible .go{opacity:1;scale:1;background:var(--accent);color:#070707;border-color:var(--accent);rotate:45deg}
+    .client-peek{position:fixed;z-index:50;left:0;top:0;width:260px;aspect-ratio:4/5;border-radius:18px;overflow:hidden;pointer-events:none;opacity:0;scale:.85;transition:opacity .35s,scale .45s var(--ease);box-shadow:0 30px 80px rgba(0,0,0,.6)}
+    .client-peek.show{opacity:1;scale:1}
+    .client-peek img{width:100%;height:100%;object-fit:cover}
+
+    @media (max-width:900px){
+      .story{height:460vh}
+      .story-layout{grid-template-columns:1fr;gap:24px;align-content:center}
+      .story-label{margin-bottom:18px}
+      .stage{--S:min(86vw,44svh);margin:0 auto;order:-1}
+      .chapter{display:none;padding:0}
+      .chapter.on{display:block}
+      .chapter.on h3{font-size:clamp(2rem,8.5vw,3rem)}
+      .chapters{padding-left:0;min-height:210px}
+      .chapters:before,.chapters:after{display:none}
+      .chapter .ch-k:before{display:none}
+      .st-tag{font-size:.6em}
+      .clients-head{flex-direction:column;align-items:flex-start}
+      .client-row{grid-template-columns:1fr auto;gap:14px}
+      .client-row em{display:none}
+      .client-row .go{opacity:1;scale:.8;width:40px;height:40px}
+      .client-peek{display:none}
+    }
+
+    @media (max-width:900px){
+      .container{width:min(calc(100% - 32px),var(--max))}
+      .section{padding:100px 0}
+      .nav-links,.nav-cta .btn{display:none}
+      .menu-btn{display:block}
+      .hero-video{height:340vh}
+      .hero-video-pin{padding-top:150px}
+      .section-head,.process,.modal-grid{grid-template-columns:1fr}
+      .work-list{display:block}
+      .project,.project:nth-child(n){margin:0 0 70px}
+      .project-card{aspect-ratio:1/1.1}
+      .cap-grid{grid-template-columns:1fr 1fr}
+      .cap:nth-child(3n){border-right:1px solid var(--line)}
+      .cap:nth-child(2n){border-right:0}
+      .process-intro{position:static}
+      .step{grid-template-columns:50px 1fr}
+      .step p{grid-column:2}
+      .solution{grid-template-columns:40px 1fr 45px}
+      .solution p{grid-column:2}
+      .footer-top{display:block}
+      .footer-side{margin-top:70px}
+      .footer-cta{flex-direction:column;align-items:flex-start}
+      .footer-cta p{max-width:none}
+      .footer-bottom{display:block}
+      .footer-bottom>*+*{margin-top:14px}
+      .to-top{display:flex}
+    }
+    @media (max-width:600px){
+      .display{font-size:clamp(4rem,18vw,7rem)}
+      .hero-video{height:300vh}
+      .cap-grid{grid-template-columns:1fr}
+      .cap,.cap:nth-child(n){border-right:0}
+      .cap{min-height:270px}
+      .solutions{border-radius:24px 24px 0 0;padding:90px 0}
+      .solution{grid-template-columns:35px 1fr 42px;padding:26px 0}
+      .solution p{display:none}
+      .quote{padding:110px 0}
+      .cta{padding:120px 0 90px}
+      .modal-inner{width:min(calc(100% - 32px),1200px);padding-top:110px}
+      .modal-side{border-left:0;border-top:1px solid var(--line);padding:25px 0 0}
+      #cursor{display:none!important}
+    }
+    @media (max-width:900px){
+      .hero-bottom{flex-direction:column;align-items:flex-start}
+      .hero-top span+span{display:none}
+      .project-tag{opacity:1;translate:0 0}
+    }
+    @media (prefers-reduced-motion:reduce){
+      *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;transition-delay:0s!important}
+      .noise{animation:none}
+    }
+  
+/* IMMERSIVE CASE STUDIES */
+.case-modal{position:fixed;inset:0;z-index:9400;background:#080808;color:#f4f4ef;visibility:hidden;pointer-events:none;clip-path:circle(0% at var(--cx,50%) var(--cy,50%));transition:clip-path 1s var(--ease),visibility 0s linear 1s}
+.case-modal.open{visibility:visible;pointer-events:auto;clip-path:circle(150% at var(--cx,50%) var(--cy,50%));transition:clip-path 1.1s var(--ease),visibility 0s}
+.case-backdrop{position:absolute;inset:0;background:radial-gradient(circle at 50% 20%,rgba(183,255,60,.09),transparent 35%),#080808}
+.case-close{position:fixed;right:25px;top:18px;z-index:130;width:54px;height:54px;border:1px solid rgba(255,255,255,.25);border-radius:50%;background:rgba(8,8,8,.65);color:#fff;font-size:30px;cursor:pointer;transition:.4s var(--ease)}
+.case-close:hover{background:#b7ff3c;color:#080808;transform:rotate(90deg)}
+.case-shell{position:relative;height:100%;overflow:hidden}
+.case-scroll{height:100%;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
+.case-topbar{position:fixed;z-index:125;left:0;right:0;top:0;padding:24px 30px;display:flex;justify-content:space-between;pointer-events:none;color:#aaa}
+.case-home{pointer-events:auto;color:#fff;font-weight:500;transition:.35s var(--ease);letter-spacing:.04em}
+.case-home span{color:#b7ff3c;margin-left:5px}.case-home:hover{color:#b7ff3c;transform:translateX(4px)}
+.case-top-actions{display:flex;align-items:center;gap:18px;pointer-events:auto}
+.case-exit{border:1px solid #444;background:rgba(8,8,8,.72);color:#aaa;padding:10px 12px;cursor:pointer;transition:.35s var(--ease);backdrop-filter:blur(8px)}
+.case-exit b{font-size:17px;font-weight:400;margin-left:7px;vertical-align:-1px}
+.case-exit:hover{background:#b7ff3c;color:#080808;border-color:#b7ff3c}
+
+.case-hero{min-height:92svh;padding:150px clamp(25px,6vw,100px) 60px;display:flex;align-items:flex-end;justify-content:space-between;gap:50px}
+.case-hero-copy{max-width:1000px}
+.case-hero h1{font-size:clamp(90px,17vw,250px);line-height:.75;letter-spacing:-.1em;margin:30px 0 35px}
+.case-hero p{font-size:clamp(20px,2.5vw,34px);line-height:1.08;letter-spacing:-.04em;max-width:780px;margin:0;color:#b8b8b2}
+.case-hero-stamp{border:1px solid #333;padding:13px 16px;line-height:1.35;color:#888;align-self:flex-end}
+.case-hero-media{height:min(78vh,900px);margin:0 clamp(16px,3vw,46px);position:relative;overflow:hidden;background:#171717;transform:scale(.96);transition:1s var(--ease)}
+.case-modal.open .case-hero-media{transform:scale(1)}
+.case-hero-media img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.9)}
+.case-media-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(0,0,0,.42))}
+.media-label{position:absolute;left:22px;bottom:20px;color:#fff}
+.case-overview{display:grid;grid-template-columns:1fr 2fr 1fr;gap:45px;padding:140px clamp(25px,8vw,130px);border-bottom:1px solid #282828}
+.case-overview h2,.showcase-head h2,.social-copy h2,.stories-intro h2{font-size:clamp(48px,7vw,110px);line-height:.82;letter-spacing:-.085em;margin:0 0 30px}
+.case-overview h2{max-width:850px}
+.case-overview p{font-size:18px;line-height:1.55;color:#92928c;max-width:760px}
+.case-overview aside{border-top:1px solid #333}
+.case-overview aside div{padding:18px 0;border-bottom:1px solid #333;display:flex;flex-direction:column;gap:7px}
+.case-overview small{font:10px "DM Mono";color:#666}.case-overview strong{font-size:13px}
+.case-showcase{padding:150px clamp(25px,8vw,130px)}
+.showcase-head{display:grid;grid-template-columns:1fr 2fr;gap:40px;margin-bottom:70px}
+.showcase-head h2{grid-column:2}.showcase-head h2 span,.social-copy h2 span,.stories-intro h2 span{color:#b7ff3c}
+.showcase-head p{grid-column:2;max-width:650px;color:#85857f;line-height:1.5;font-size:18px;margin:0}
+.media-mosaic{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+.mosaic-item{position:relative;overflow:hidden;background:#151515;min-height:360px}
+.mosaic-item:nth-child(1){grid-column:1/8;min-height:650px}.mosaic-item:nth-child(2){grid-column:8/13}.mosaic-item:nth-child(3){grid-column:8/13}.mosaic-item:nth-child(4){grid-column:1/5}.mosaic-item:nth-child(5){grid-column:5/9}.mosaic-item:nth-child(6){grid-column:9/13}
+.mosaic-item img{width:100%;height:100%;object-fit:cover;transition:1s var(--ease);filter:saturate(.8)}
+.mosaic-item:hover img{transform:scale(1.06)}
+.mosaic-tag{position:absolute;left:15px;bottom:14px;background:#080808;color:#fff;padding:7px 10px;font:9px "DM Mono"}
+.case-social{background:#f2f2ef;color:#080808;padding:150px clamp(25px,8vw,130px)}
+.social-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:90px;margin-top:70px}
+.social-copy p{max-width:420px;color:#686863;line-height:1.5;font-size:17px}
+.social-stat{display:flex;align-items:end;gap:13px;margin-top:55px}.social-stat b{font-size:60px;letter-spacing:-.08em}.social-stat span{font:10px "DM Mono";padding-bottom:11px;color:#777}
+.feed-stack{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;align-items:start}
+.feed-card{aspect-ratio:4/5;position:relative;overflow:hidden;box-shadow:0 18px 45px rgba(0,0,0,.12);transform:translateY(var(--shift,0))}
+.feed-card img{width:100%;height:100%;object-fit:cover;display:block}
+.feed-card:nth-child(2),.feed-card:nth-child(5){--shift:55px}
+.feed-card:nth-child(3),.feed-card:nth-child(6){--shift:110px}
+.feed-card:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 65%,rgba(0,0,0,.35))}
+.feed-label{position:absolute;z-index:2;left:12px;bottom:12px;color:#fff;font:9px "DM Mono"}
+.case-stories{padding:150px clamp(25px,8vw,130px);background:#111}
+.stories-intro{display:grid;grid-template-columns:2fr 1fr;gap:60px;margin-top:55px;align-items:end}
+.stories-intro p{color:#85857f;line-height:1.5;max-width:350px}
+.phone-row{display:flex;gap:24px;margin-top:80px;align-items:flex-start;overflow-x:auto;padding:10px 5px 45px;scrollbar-width:none}
+.phone{flex:0 0 clamp(190px,19vw,290px);aspect-ratio:9/16;position:relative;border:8px solid #050505;border-radius:28px;overflow:hidden;background:#222;box-shadow:0 35px 80px rgba(0,0,0,.45);transform:rotate(var(--r,-2deg));transition:.5s var(--ease)}
+.phone:nth-child(2){--r:2deg;margin-top:70px}.phone:nth-child(3){--r:-1deg}.phone:nth-child(4){--r:3deg;margin-top:40px}
+.phone:hover{transform:translateY(-18px) rotate(0deg)}
+.phone img{width:100%;height:100%;object-fit:cover}.phone .phone-ui{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.2),transparent 35%,rgba(0,0,0,.55));display:flex;align-items:flex-end;padding:15px;color:#fff;font:9px "DM Mono"}
+.case-detail{padding:150px clamp(25px,8vw,130px);border-bottom:1px solid #282828}
+.detail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:75px;border-top:1px solid #333}
+.detail-grid>div{padding:28px 25px 10px 0;border-right:1px solid #333;min-height:260px}.detail-grid>div+div{padding-left:30px}
+.detail-grid span{font:10px "DM Mono";color:#666}.detail-grid h3{font-size:15px;margin:60px 0 15px}.detail-grid p{color:#888;line-height:1.5;max-width:310px}
+.case-end{min-height:65vh;display:flex;flex-direction:column;justify-content:center;padding:100px clamp(25px,8vw,130px)}
+.case-end h2{font-size:clamp(65px,12vw,180px);line-height:.78;letter-spacing:-.1em;margin:45px 0;cursor:pointer}.case-end h2 span{color:#b7ff3c}
+.next-case{align-self:flex-start;background:#b7ff3c;border:0;padding:15px 20px;font-weight:800;cursor:pointer}
+@media(max-width:800px){
+.case-topbar{padding:14px 16px}.case-top-actions{gap:8px}.case-counter{display:none}.case-exit{padding:8px 9px}.case-close{right:15px;top:58px;width:42px;height:42px}
+.case-hero{min-height:80svh;padding:130px 20px 45px;display:block}.case-hero h1{font-size:23vw;margin:55px 0 25px}.case-hero p{font-size:20px}.case-hero-stamp{display:inline-block;margin-top:45px}
+.case-hero-media{height:58svh;margin:0 12px}.case-overview,.showcase-head,.social-grid,.stories-intro{grid-template-columns:1fr;gap:35px}.case-overview{padding:90px 20px}.case-overview h2,.showcase-head h2{grid-column:auto}.case-showcase,.case-stories,.case-detail,.case-social{padding:90px 20px}.showcase-head p{grid-column:auto}.media-mosaic{grid-template-columns:1fr 1fr}.mosaic-item:nth-child(n){grid-column:auto;min-height:280px}.mosaic-item:first-child{grid-column:1/-1;min-height:430px}.feed-stack{grid-template-columns:repeat(2,1fr)}.feed-card:nth-child(n){--shift:0}.feed-card:nth-child(2),.feed-card:nth-child(4),.feed-card:nth-child(6){margin-top:35px}.phone-row{margin-top:55px}.detail-grid{grid-template-columns:1fr}.detail-grid>div,.detail-grid>div+div{border-right:0;border-bottom:1px solid #333;padding:25px 0;min-height:200px}.detail-grid h3{margin-top:40px}
+}
+
+/* Branded placeholder — used until a project has real imagery */
+.ph{position:absolute;inset:0;display:flex;align-items:flex-end;padding:clamp(18px,3vw,34px);overflow:hidden;background:
+  radial-gradient(120% 90% at 85% 10%,var(--c2,#b7ff3c) 0%,transparent 55%),
+  linear-gradient(160deg,var(--c1,#1a1a1a),#0a0a0a 85%)}
+.ph:before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px);background-size:44px 44px;mask-image:linear-gradient(to top,#000,transparent 80%)}
+.ph span{position:relative;font-weight:800;letter-spacing:-.07em;line-height:.82;font-size:clamp(2.6rem,5.2vw,5.4rem);color:#fff;text-shadow:0 2px 30px rgba(0,0,0,.35);word-break:break-word}
+.ph-hero span{font-size:clamp(4rem,12vw,13rem)}
+.project-card .ph{transition:scale 1.6s var(--ease);scale:var(--s,1.08)}
+.project.visible .project-card .ph{--s:1}
+.project:hover .project-card .ph{scale:1.03}
+.status-badge{position:absolute;top:18px;left:18px;z-index:2;padding:8px 12px;border-radius:99px;background:rgba(9,9,9,.65);backdrop-filter:blur(8px);border:1px solid var(--line2);font:500 10px DM Mono,monospace;letter-spacing:.14em;text-transform:uppercase}
+.status-badge.live{color:var(--accent)}
+.status-badge.live:before{content:"● "}
+
+/* Explore CTA */
+.work-more{display:flex;flex-direction:column;align-items:center;gap:18px;margin-top:40px;padding-top:60px;border-top:1px solid var(--line)}
+
+/* All work overlay */
+.work-modal{position:fixed;inset:0;z-index:9300;background:var(--bg);visibility:hidden;pointer-events:none;clip-path:inset(100% 0 0 0);transition:clip-path 1s var(--ease),visibility 0s linear 1s}
+.work-modal.open{visibility:visible;pointer-events:auto;clip-path:inset(0 0 0 0);transition:clip-path 1s var(--ease),visibility 0s}
+.work-modal-scroll{height:100%;overflow-y:auto;overscroll-behavior:contain}
+.aw-top{position:sticky;top:0;z-index:3;display:flex;justify-content:space-between;align-items:center;padding:22px 0;background:linear-gradient(var(--bg) 70%,transparent)}
+.aw-head{display:grid;grid-template-columns:1fr 360px;gap:60px;align-items:end;margin:60px 0 50px}
+.aw-head p{color:var(--muted);font-size:17px;line-height:1.55;margin:0}
+.aw-title{font-size:clamp(4.5rem,12vw,12rem);line-height:.8;letter-spacing:-.08em;margin:0;font-weight:800}
+.aw-title sup{font:500 clamp(14px,1.4vw,20px) DM Mono,monospace;letter-spacing:0;color:var(--accent);vertical-align:top;margin-left:12px}
+.aw-filters{display:flex;flex-wrap:wrap;gap:8px;padding-bottom:30px;border-bottom:1px solid var(--line);margin-bottom:40px}
+.aw-filters button{border:1px solid var(--line2);background:transparent;color:#aaa;border-radius:99px;padding:10px 16px;font:500 11px DM Mono,monospace;letter-spacing:.12em;text-transform:uppercase;transition:.3s var(--ease)}
+.aw-filters button:hover{color:var(--text);border-color:#777}
+.aw-filters button.on{background:var(--accent);border-color:var(--accent);color:#070707}
+.aw-filters button span{opacity:.55;margin-left:6px}
+.aw-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:50px 22px}
+.aw-card{position:relative;cursor:pointer;opacity:0;translate:0 40px;transition:opacity .8s var(--ease),translate .8s var(--ease)}
+.work-modal.open .aw-card{opacity:1;translate:0 0;transition-delay:calc(var(--i) * 70ms + 250ms)}
+.aw-card[hidden]{display:none}
+.aw-card:nth-child(3n+2){margin-top:70px}
+.aw-media{position:relative;aspect-ratio:4/5;border-radius:20px;overflow:hidden;background:var(--surface);border:1px solid var(--line)}
+.aw-media img{width:100%;height:100%;object-fit:cover;filter:saturate(.7);transition:scale 1s var(--ease),filter .6s}
+.aw-card:hover .aw-media img,.aw-card:focus-visible .aw-media img{scale:1.05;filter:saturate(1)}
+.aw-card:hover .ph,.aw-card:focus-visible .ph{scale:1.04}
+.aw-media .ph{transition:scale 1s var(--ease)}
+.aw-meta{display:flex;justify-content:space-between;gap:16px;padding:18px 2px 0}
+.aw-meta h3{margin:0;font-size:clamp(1.4rem,2vw,2rem);letter-spacing:-.05em}
+.aw-meta p{margin:6px 0 0;color:var(--muted);font:11px DM Mono,monospace;text-transform:uppercase;letter-spacing:.12em}
+.aw-meta span{color:#555;font:11px DM Mono,monospace}
+.aw-foot{display:flex;flex-direction:column;align-items:center;gap:20px;padding:120px 0 100px;margin-top:80px;border-top:1px solid var(--line);text-align:center}
+
+/* Case study additions */
+.case-live{display:inline-flex;align-items:center;gap:10px;margin-top:30px;padding:14px 18px;border-radius:99px;background:var(--accent);color:#070707;transition:.4s var(--ease)}
+.case-live:hover{background:#fff;transform:translateY(-3px)}
+.case-live[hidden]{display:none}
+.case-modal section[hidden]{display:none}
+.case-hero-media .ph{position:absolute}
+
+@media(max-width:900px){
+  .aw-head{grid-template-columns:1fr;gap:24px;margin-top:30px}
+  .aw-grid{grid-template-columns:1fr 1fr;gap:40px 14px}
+  .aw-card:nth-child(n){margin-top:0}
+  .aw-card:nth-child(2n){margin-top:50px}
+}
+@media(max-width:560px){
+  .aw-grid{grid-template-columns:1fr}
+  .aw-card:nth-child(n){margin-top:0}
+}
+</style>
+</head>
+
+<body>
+  <div id="loader" aria-hidden="true">
+    <div class="loader-inner">
+      <div class="loader-brand"><span style="--i:0">V</span><span style="--i:1">I</span><span style="--i:2">D</span><span style="--i:3">Z</span><span style="--i:4">N</span></div>
+      <div class="loader-row"><div class="loader-track"><div id="loader-bar" class="loader-bar"></div></div><span id="loader-num">0%</span></div>
+    </div>
+  </div>
+
+  <div class="progress" id="progress"></div>
+  <div class="noise"></div>
+  <div id="cursor" data-label=""></div>
+
+  <header>
+    <nav class="site-nav" id="nav">
+      <div class="container nav-inner">
+        <a class="logo" href="#top" aria-label="VIDZN home">VIDZN<span><b>●</b></span></a>
+        <div class="nav-links">
+          <a href="#work"><span class="roll" data-t="Work"><span>Work</span></span></a>
+          <a href="#capabilities"><span class="roll" data-t="Capabilities"><span>Capabilities</span></span></a>
+          <a href="#process"><span class="roll" data-t="Process"><span>Process</span></span></a>
+          <a href="#solutions"><span class="roll" data-t="Solutions"><span>Solutions</span></span></a>
+          <a href="#contact"><span class="roll" data-t="Contact"><span>Contact</span></span></a>
+        </div>
+        <div class="nav-cta">
+          <button class="btn primary js-contact magnetic" type="button">Start a project <span class="arrow">↗</span></button>
+          <button class="menu-btn" id="menu-btn" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+        </div>
+      </div>
+    </nav>
+    <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+      <nav>
+        <a href="#work">Work</a>
+        <a href="#capabilities">Capabilities</a>
+        <a href="#process">Process</a>
+        <a href="#solutions">Solutions</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="mobile-bottom"><span class="mono">VIDZN / 2026</span><span class="mono">WE DESIGN WHAT'S NEXT.</span></div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero-video" id="hero-video">
+      <div class="hero-video-pin">
+        <video class="hero-video-el" id="hero-video-el" muted playsinline preload="metadata" aria-hidden="true">
+          <source src="vidzn-hero-reel-mobile.mp4?v=2" type="video/mp4" media="(max-width:768px)">
+          <source src="vidzn-hero-reel.mp4?v=2" type="video/mp4">
+        </video>
+        <script>
+          // Picks the matching poster frame before the video paints, so there's
+          // no flash of the wrong (desktop/mobile) still image on load.
+          document.getElementById("hero-video-el").poster =
+            window.matchMedia("(max-width:768px)").matches ? "vidzn-hero-poster-mobile.jpg?v=2" : "vidzn-hero-poster.jpg?v=2";
+        </script>
+        <div class="hero-video-scrim"></div>
+        <div class="hero-grid"></div><div class="orb a"></div><div class="orb b"></div>
+<div class="hero-copy-scrim" id="hero-copy-scrim"></div>
+<div class="hero-copy container" id="hero-copy">
+  <div class="hero-top mono hero-fade"><span><i class="dot"></i>Creative studio — Brand / Digital / Motion</span><span>Scroll to play the reel</span></div>
+  <h1 class="display hero-title" aria-label="We design what's next."><span class="split-line in" style="--l:0"><span>WE DESIGN</span></span><span class="split-line in" style="--l:1"><span>WHAT'S <em>NEXT.</em></span></span></h1>
+  <div class="hero-bottom hero-fade">
+    <p>Brand, digital and creative direction for ambitious businesses that refuse to blend in.</p>
+    <button class="btn primary js-contact magnetic" type="button">Start a project <span class="arrow">↗</span></button>
+  </div>
+</div>
+<div class="hero-scroll-cue" aria-hidden="true"></div>
+        <div class="hero-video-progress" aria-hidden="true"><div class="hero-video-progress-bar" id="hero-video-progress-bar"></div></div>
+      </div>
+    </section>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="track">
+        <span>BRAND <b>✳</b> DIGITAL <b>✳</b> MOTION <b>✳</b> AI CREATIVE <b>✳</b> CONTENT <b>✳</b> PACKAGING <b>✳</b></span>
+        <span>BRAND <b>✳</b> DIGITAL <b>✳</b> MOTION <b>✳</b> AI CREATIVE <b>✳</b> CONTENT <b>✳</b> PACKAGING <b>✳</b></span>
+      </div>
+    </div>
+
+    <section class="section" id="work">
+      <div class="container">
+        <div class="section-head reveal">
+          <div><h2 class="title">WORK THAT<br>DOES THE TALKING.</h2></div>
+          <p>Selected projects across identity, packaging, digital and content — each one built as a system, not a one-off.</p>
+        </div>
+
+        <!-- Cards are rendered from vidzn-projects.js (featured: true). -->
+        <div class="work-list" id="work-list"></div>
+
+        <div class="work-more reveal">
+          <span class="mono muted" id="work-more-count"></span>
+          <button class="btn primary magnetic" type="button" id="explore-work" data-cursor="ALL WORK">Explore all work <span class="arrow">↗</span></button>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- HOW A BRAND IS BORN — the stage builds a brand as you scroll -->
+    <section class="story" id="story" aria-label="How a brand is born">
+      <div class="story-pin">
+        <div class="container story-layout">
+          <div class="story-copy">
+            <div class="story-label mono"><i></i>How a brand is born</div>
+            <ol class="chapters" id="chapters">
+              <li class="chapter on"><span class="ch-k">The spark</span><h3>Every brand starts <span>as a single idea.</span></h3><div class="ch-body"><div><p>Before the logo, the colour or the campaign, there's an idea worth making impossible to ignore. We start by finding it.</p></div></div></li>
+              <li class="chapter"><span class="ch-k">The position</span><h3>We find the reason <span>people should care.</span></h3><div class="ch-body"><div><p>Audience, market, purpose, edge. We sharpen ambition into a position people can understand, remember and choose.</p></div></div></li>
+              <li class="chapter"><span class="ch-k">The identity</span><h3>Then the idea <span>gets a face.</span></h3><div class="ch-body"><div><p>Mark, colour, type and image become one recognisable visual language — built with intent, not decoration.</p></div></div></li>
+              <li class="chapter"><span class="ch-k">The system</span><h3>One idea, <span>every touchpoint.</span></h3><div class="ch-body"><div><p>Packaging, website, social, signage and motion all speak the same language, so the brand feels like one brand everywhere.</p></div></div></li>
+              <li class="chapter"><span class="ch-k">The impact</span><h3>And people <span>start to notice.</span></h3><div class="ch-body"><div><p>Not decoration — recognition. A brand with enough clarity and character to move the business forward.</p></div></div></li>
+            </ol>
+          </div>
+
+          <div class="stage" id="stage" aria-hidden="true">
+            <div class="st-grid"></div>
+            <span class="st-corner tl" id="st-phase">SPARK</span>
+            <span class="st-corner br" id="st-pct">00%</span>
+            <div class="st-ring r3"></div><div class="st-ring r2"></div><div class="st-ring r1"></div>
+            <div class="st-axis h"></div><div class="st-axis v"></div>
+            <span class="st-tag t1">AUDIENCE</span><span class="st-tag t2">MARKET</span><span class="st-tag t3">PURPOSE</span><span class="st-tag t4">EDGE</span>
+            <div class="st-dot"></div>
+            <div class="st-mark"><div class="mk"></div></div>
+            <div class="st-kit swatch"><i style="background:var(--accent)"></i><i style="background:var(--text)"></i><i style="background:#090909"></i><i style="background:#3a3a37"></i></div>
+            <div class="st-kit type"><b>Aa</b><small>DISPLAY / 800</small></div>
+            <div class="st-kit grid-note">CLEARSPACE<br>MIN SIZE 24PX<br>GRID 8PT</div>
+            <div class="st-tile"><div class="mk"></div><i></i><span>PACKAGING</span></div>
+            <div class="st-tile"><div class="mk"></div><i></i><span>WEBSITE</span></div>
+            <div class="st-tile"><div class="mk"></div><i></i><span>SOCIAL</span></div>
+            <div class="st-tile"><div class="mk"></div><i></i><span>SIGNAGE</span></div>
+            <div class="st-tile"><div class="mk"></div><i></i><span>MOTION</span></div>
+            <div class="st-tile"><div class="mk"></div><i></i><span>STATIONERY</span></div>
+            <div class="st-chart">
+              <small>RECOGNITION ↗</small>
+              <svg viewBox="0 0 100 30" preserveAspectRatio="none">
+                <defs><linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="rgba(183,255,60,.28)"/><stop offset="1" stop-color="rgba(183,255,60,0)"/></linearGradient></defs>
+                <path class="area" id="st-area" d="M0,28 C15,27 25,26 35,23 C48,19 55,20 65,14 C75,8 85,6 100,1 L100,30 L0,30 Z"/>
+                <path id="st-line" vector-effect="non-scaling-stroke" stroke-width="2.5" d="M0,28 C15,27 25,26 35,23 C48,19 55,20 65,14 C75,8 85,6 100,1"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BRANDS WE'RE BUILDING — rendered from vidzn-projects.js -->
+    <section class="clients" id="clients">
+      <div class="container">
+        <div class="clients-head reveal">
+          <h2>Brands we're building. <span>Each one with its own world — pick a name to open the story.</span></h2>
+          <button class="btn" type="button" id="clients-all">See all work <span class="arrow">↗</span></button>
+        </div>
+        <div class="client-list reveal" id="client-list"></div>
+      </div>
+      <div class="client-peek" id="client-peek"></div>
+    </section>
+
+    <section class="statement">
+      <div class="container reveal">
+        <h2>Good design gets attention.<br><span>Great design gives people a reason to care.</span></h2>
+      </div>
+    </section>
+
+    <section class="section" id="capabilities">
+      <div class="container">
+        <div class="section-head reveal">
+          <div><h2 class="title">ONE STUDIO.<br>MANY WAYS TO MOVE.</h2></div>
+          <p>Strategy, design and production working as one system — so your brand feels like one brand everywhere it appears.</p>
+        </div>
+        <div class="cap-grid stagger">
+          <article class="cap reveal" style="--i:0"><span class="cap-go" aria-hidden="true">↗</span><div><h3>Brand Strategy</h3><p>Positioning, personality, messaging and the strategic foundation behind the identity.</p><ul class="cap-list"><li>Positioning</li><li>Naming</li><li>Messaging</li><li>Brand architecture</li></ul></div></article>
+          <article class="cap reveal" style="--i:1"><span class="cap-go" aria-hidden="true">↗</span><div><h3>Identity Design</h3><p>Logos, typography, colour, graphic systems and brand guidelines built to scale.</p><ul class="cap-list"><li>Logo suite</li><li>Type &amp; colour</li><li>Guidelines</li><li>Brand assets</li></ul></div></article>
+          <article class="cap reveal" style="--i:2"><span class="cap-go" aria-hidden="true">↗</span><div><h3>Packaging</h3><p>Packaging systems that make products easier to recognise, remember and choose.</p><ul class="cap-list"><li>Structure</li><li>Labels</li><li>Product range</li><li>Retail</li></ul></div></article>
+          <article class="cap reveal" style="--i:3"><span class="cap-go" aria-hidden="true">↗</span><div><h3>Motion &amp; Video</h3><p>Reels, motion graphics, product films and launch content with a clear visual language.</p><ul class="cap-list"><li>Reels</li><li>Motion logos</li><li>Product films</li><li>Ads</li></ul></div></article>
+          <article class="cap reveal" style="--i:4"><span class="cap-go" aria-hidden="true">↗</span><div><h3>AI Creative</h3><p>Concept development, campaign worlds and production support using modern AI workflows.</p><ul class="cap-list"><li>Concepts</li><li>Campaign worlds</li><li>3D &amp; renders</li><li>Pipelines</li></ul></div></article>
+          <article class="cap reveal" style="--i:5"><span class="cap-go" aria-hidden="true">↗</span><div><h3>Digital Experience</h3><p>Websites and digital touchpoints that translate the brand into an intuitive experience.</p><ul class="cap-list"><li>Websites</li><li>Landing pages</li><li>UI design</li><li>Social kits</li></ul></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="process">
+      <div class="container process">
+        <div class="process-intro reveal">
+          
+          <h2 class="title">LESS CHAOS.<br>MORE CLARITY.</h2>
+          <p class="muted body-xl">A simple process that keeps strategy, craft and momentum moving together.</p>
+        </div>
+        <div class="steps stagger">
+          <div class="step reveal" style="--i:0"><span class="step-no mono">01</span><h3>Discover</h3><p>We understand the business, audience, ambition and problem before touching the visuals.</p></div>
+          <div class="step reveal" style="--i:1"><span class="step-no mono">02</span><h3>Define</h3><p>We turn complexity into a focused strategic direction and a clear creative territory.</p></div>
+          <div class="step reveal" style="--i:2"><span class="step-no mono">03</span><h3>Design</h3><p>We build the visual system — then pressure-test it across real-world applications.</p></div>
+          <div class="step reveal" style="--i:3"><span class="step-no mono">04</span><h3>Develop</h3><p>We bring the system to life across digital, content, packaging, motion and campaigns.</p></div>
+          <div class="step reveal" style="--i:4"><span class="step-no mono">05</span><h3>Deliver</h3><p>You leave with a usable system, launch-ready assets and the confidence to keep moving.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="solutions" id="solutions">
+      <div class="container">
+        <div class="section-head reveal">
+          <div><h2 class="title">CHOOSE YOUR<br>NEXT MOVE.</h2></div>
+          <p>Clear engagement models for every stage of growth. Pick a starting point — we shape the scope around you.</p>
+        </div>
+        <div class="solution-list">
+          <button class="solution reveal" data-solution="START" type="button"><span class="num">01</span><h3><span class="roll" data-t="START™"><span>START™</span></span></h3><p>A focused brand foundation for founders and early-stage businesses.</p><span class="go">↗</span></button>
+          <button class="solution reveal" data-solution="LAUNCH" type="button"><span class="num">02</span><h3><span class="roll" data-t="LAUNCH™"><span>LAUNCH™</span></span></h3><p>Strategy, identity and digital presence built to enter the market with confidence.</p><span class="go">↗</span></button>
+          <button class="solution reveal" data-solution="SCALE" type="button"><span class="num">03</span><h3><span class="roll" data-t="SCALE™"><span>SCALE™</span></span></h3><p>Ongoing creative support for brands that need consistency and speed.</p><span class="go">↗</span></button>
+          <button class="solution reveal" data-solution="PARTNER" type="button"><span class="num">04</span><h3><span class="roll" data-t="PARTNER™"><span>PARTNER™</span></span></h3><p>A long-term creative extension for teams that want senior thinking on demand.</p><span class="go">↗</span></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="quote">
+      <div class="container reveal">
+        
+        <blockquote>“Don't make your brand look expensive. Make it feel <span style="color:#555">inevitable.</span>”</blockquote>
+        <footer>VIDZN / Creative principle</footer>
+      </div>
+    </section>
+
+    <section class="cta" id="contact">
+      <div class="container reveal">
+        
+        <h2>READY TO<br><span class="outline">MAKE NOISE?</span></h2>
+        <button class="btn primary js-contact magnetic">Let's build what's next <span class="arrow">↗</span></button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand" id="footer-brand"><span class="fb-text">VIDZN</span><canvas aria-hidden="true"></canvas><span class="fb-hint mono" aria-hidden="true">Move through the letters · tap to burst</span></div>
+        <div class="footer-side">
+          <nav class="footer-nav" aria-label="Footer">
+            <a href="#work"><span class="roll" data-t="Work"><span>Work</span></span><i aria-hidden="true">↗</i></a>
+            <a href="#capabilities"><span class="roll" data-t="Capabilities"><span>Capabilities</span></span><i aria-hidden="true">↗</i></a>
+            <a href="#process"><span class="roll" data-t="Process"><span>Process</span></span><i aria-hidden="true">↗</i></a>
+            <a href="vidzn-services-inner-page.html"><span class="roll" data-t="Solutions"><span>Solutions</span></span><i aria-hidden="true">↗</i></a>
+          </nav>
+          <div class="footer-cta">
+            <div><span class="mono">Got a brand to build?</span><p>Tell us where you're headed — we'll reply with how we'd get you there.</p></div>
+            <button class="btn primary js-contact magnetic" type="button">Start a project <span class="arrow">↗</span></button>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>© <span id="year"></span> VIDZN. All rights reserved.</div>
+        <button class="to-top mono" type="button" id="to-top">Back to top <span aria-hidden="true">↑</span></button>
+        <div>We design what's next.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ALL WORK -->
+  <div class="work-modal" id="work-modal" aria-hidden="true" role="dialog" aria-label="All work">
+    <div class="work-modal-scroll" data-lenis-prevent>
+      <div class="container">
+        <div class="aw-top">
+          <a class="logo" href="#top" id="aw-home">VIDZN<span><b>●</b></span></a>
+          <button class="case-exit mono" type="button" id="aw-close">CLOSE <b>×</b></button>
+        </div>
+        <div class="aw-head">
+          <div><h2 class="aw-title">ALL<br>WORK<sup id="aw-count">07</sup></h2></div>
+          <p>Every brand we're building — identity, packaging, digital and content. Pick one to open the case study.</p>
+        </div>
+        <div class="aw-filters" id="aw-filters" role="toolbar" aria-label="Filter projects"></div>
+        <div class="aw-grid" id="aw-grid"></div>
+        <div class="aw-foot">
+          <p class="mono muted">Have a brand that should be next on this list?</p>
+          <button class="btn primary js-contact magnetic" type="button">Start a project <span class="arrow">↗</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- IMMERSIVE CASE STUDY EXPERIENCE -->
+  <div class="case-modal" id="case-modal" aria-hidden="true">
+    <div class="case-backdrop"></div>
+    <button class="case-close" data-close="case-modal" aria-label="Close case study">×</button>
+
+    <div class="case-shell">
+      <div class="case-topbar">
+        <a class="case-home mono" href="#top" aria-label="Back to VIDZN homepage">VIDZN <span>↗</span></a>
+        <span class="mono" id="case-index">01 / SELECTED WORK</span>
+        <div class="case-top-actions">
+          <span class="mono" id="case-counter">01 — 03</span>
+          <button class="case-exit mono" id="case-exit" type="button">EXIT CASE <b>×</b></button>
+        </div>
+      </div>
+
+      <div class="case-scroll" data-lenis-prevent>
+        <header class="case-hero">
+          <div class="case-hero-copy">
+            <div class="eyebrow mono"><i></i><span id="case-kicker">BRAND / DIGITAL</span></div>
+            <h1 id="case-title">NYOTA</h1>
+            <p id="case-intro">A digital wedding experience with a distinct point of view.</p>
+            <a class="case-live mono" id="case-live" href="#" target="_blank" rel="noopener" hidden>Visit live site <span>↗</span></a>
+          </div>
+          <div class="case-hero-stamp mono">SCROLL<br>TO EXPLORE ↓</div>
+        </header>
+
+        <div class="case-hero-media" id="case-hero-media">
+          <img id="case-image" src="" alt=""><div class="ph ph-hero" id="case-ph" hidden><span id="case-ph-name"></span></div>
+          <div class="case-media-overlay"></div>
+          <span class="mono media-label" id="case-media-label">CASE / 01</span>
+        </div>
+
+        <section class="case-overview">
+          <div class="mono">THE BRIEF</div>
+          <div>
+            <h2 id="case-heading">A sharper brand experience.</h2>
+            <p id="case-copy">The visual system was built to make the brand feel distinctive, coherent and ready to move across every touchpoint.</p>
+          </div>
+          <aside>
+            <div><small>DISCIPLINE</small><strong id="case-services">Brand Identity / Digital</strong></div>
+            <div><small>OUTPUT</small><strong id="case-output">Identity / Social / Digital</strong></div>
+            <div><small>YEAR</small><strong id="case-year">2026</strong></div>
+          </aside>
+        </section>
+
+        <section class="case-showcase" id="case-showcase">
+          <div class="showcase-head">
+            <div class="mono">01 / THE SYSTEM</div>
+            <h2>ONE IDEA.<br><span>MANY TOUCHPOINTS.</span></h2>
+            <p id="case-system-copy">A visual language designed to stay recognisable whether it appears as a feed post, story, campaign or digital experience.</p>
+          </div>
+
+          <div class="media-mosaic" id="case-mosaic"></div>
+        </section>
+
+        <section class="case-social" id="case-social">
+          <div class="mono">02 / SOCIAL WORLD</div>
+          <div class="social-grid">
+            <div class="social-copy">
+              <h2>THE<br><span>FEED.</span></h2>
+              <p>Designed as a system, not a collection of random posts. Every frame carries the same visual voice while giving the content enough room to breathe.</p>
+              <div class="social-stat"><b id="post-count">06</b><span>POST FORMATS</span></div>
+            </div>
+            <div class="feed-stack" id="case-feed"></div>
+          </div>
+        </section>
+
+        <section class="case-stories" id="case-stories-sec">
+          <div class="mono">03 / STORIES</div>
+          <div class="stories-intro">
+            <h2>MADE FOR<br><span>THE SCROLL.</span></h2>
+            <p>Vertical storytelling built around rhythm, hierarchy and quick recognition.</p>
+          </div>
+          <div class="phone-row" id="case-stories"></div>
+        </section>
+
+        <section class="case-detail" id="case-detail">
+          <div class="mono">04 / DETAILS</div>
+          <div class="detail-grid">
+            <div><span>01</span><h3>TYPE</h3><p id="case-type">Bold editorial typography with a refined supporting hierarchy.</p></div>
+            <div><span>02</span><h3>IMAGE</h3><p id="case-image-note">Art-directed imagery and compositions built for instant visual recognition.</p></div>
+            <div><span>03</span><h3>MOTION</h3><p id="case-motion">Micro movement, reveals and transitions designed to make the system feel alive.</p></div>
+          </div>
+        </section>
+
+        <section class="case-end">
+          <div class="mono">END OF CASE / NEXT PROJECT</div>
+          <h2 id="case-next-title">FLOWRIAN <span>↗</span></h2>
+          <button class="next-case" id="next-case" type="button">Open next case</button>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact modal -->
+  <div class="modal contact-modal" id="contact-modal" aria-hidden="true" data-lenis-prevent>
+    <button class="modal-close" data-close="contact-modal" aria-label="Close">×</button>
+    <div class="modal-inner">
+      <div class="eyebrow mono"><i></i> Start a conversation</div>
+      <h2>LET'S MAKE<br>IT REAL.</h2>
+      <p class="body-xl muted">Tell us what you're building, where you're stuck, and what success should look like.</p>
+      <form class="form" id="contact-form">
+        <div class="field"><label for="name">Your name</label><input id="name" name="name" autocomplete="name" required placeholder="Vir"></div>
+        <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required placeholder="you@company.com"></div>
+        <div class="field"><label for="company">Company</label><input id="company" name="company" autocomplete="organization" placeholder="Your company"></div>
+        <div class="field"><label for="message">Project</label><textarea id="message" name="message" required placeholder="What are we building together?"></textarea></div>
+        <div aria-hidden="true" style="position:absolute;left:-9999px"><input name="_gotcha" tabindex="-1" autocomplete="off"></div>
+        <button class="btn primary" type="submit">Send inquiry <span class="arrow">↗</span></button>
+      </form>
+    </div>
+  </div>
+
+  <script src="vidzn-config.js"></script>
+  <script src="vidzn-projects.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script>
+    (() => {
+      "use strict";
+      const reduceMotion = matchMedia("(prefers-reduced-motion:reduce)").matches;
+      const finePointer = matchMedia("(pointer:fine)").matches;
+
+      const $ = (selector, root = document) => root.querySelector(selector);
+      const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+
+      // Work — every card and case study comes from vidzn-projects.js. Rendered first so the
+      // reveal, cursor and magnetic code below picks the cards up.
+      const projects = window.VIDZN_PROJECTS || [];
+      const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+      const pad = n => String(n).padStart(2, "0");
+      const media = (p, attrs = "") => p.cover
+        ? `<img src="${esc(p.cover)}" alt="${esc(p.title)} — ${esc(p.tags)}" loading="lazy" ${attrs}>`
+        : `<div class="ph" style="--c1:${esc(p.colors?.[0])};--c2:${esc(p.colors?.[1])}"><span>${esc(p.title)}</span></div>`;
+      const badge = p => p.live ? `<span class="status-badge live">Live site</span>` : p.status ? `<span class="status-badge">${esc(p.status)}</span>` : "";
+
+      const featured = projects.filter(p => p.featured).slice(0, 4);
+      $("#work-list").innerHTML = featured.map((p, i) => `
+        <article class="project reveal" style="--i:${i}" data-project="${esc(p.key)}" data-cursor="VIEW CASE" tabindex="0" role="button" aria-label="Open ${esc(p.title)} case study">
+          <div class="project-card">${media(p)}<div class="project-overlay"></div>${badge(p)}<span class="project-tag"><i></i>VIEW CASE</span></div>
+          <div class="project-meta"><div><h3>${esc(p.title)}</h3><p>${esc(p.tags)}</p></div><span class="project-number">${pad(i + 1)}</span></div>
+        </article>`).join("");
+      $("#work-more-count").textContent = `${pad(featured.length)} of ${pad(projects.length)} projects`;
+      $("#aw-count").textContent = pad(projects.length);
+
+      const categories = ["All", ...new Set(projects.map(p => p.category).filter(Boolean))];
+      $("#aw-filters").innerHTML = categories.map(c =>
+        `<button type="button" data-filter="${esc(c)}" class="${c === "All" ? "on" : ""}" aria-pressed="${c === "All"}">${esc(c)}<span>${c === "All" ? projects.length : projects.filter(p => p.category === c).length}</span></button>`).join("");
+      $("#aw-grid").innerHTML = projects.map((p, i) => `
+        <article class="aw-card project-link" style="--i:${i}" data-project="${esc(p.key)}" data-category="${esc(p.category)}" data-cursor="VIEW CASE" tabindex="0" role="button" aria-label="Open ${esc(p.title)} case study">
+          <div class="aw-media">${media(p)}${badge(p)}</div>
+          <div class="aw-meta"><div><h3>${esc(p.title)}</h3><p>${esc(p.tags)}</p></div><span>${pad(i + 1)}</span></div>
+        </article>`).join("");
+      $("#client-list").innerHTML = projects.map(p => `
+        <button type="button" class="client-row" data-project="${esc(p.key)}" data-cursor="VIEW CASE">
+          <b>${esc(p.name || p.title)}</b><em>${esc(p.tags)}</em><span class="go">↗</span>
+        </button>`).join("");
+      // A small cover preview follows the cursor over the client names (desktop only).
+      const peek = $("#client-peek");
+      if (matchMedia("(pointer:fine)").matches) $$(".client-row").forEach(row => {
+        const p = projects.find(x => x.key === row.dataset.project);
+        row.addEventListener("mouseenter", () => { peek.innerHTML = media(p); peek.classList.add("show"); });
+        row.addEventListener("mouseleave", () => peek.classList.remove("show"));
+        row.addEventListener("mousemove", e => { peek.style.transform = `translate(${e.clientX + 30}px,${e.clientY - 160}px) rotate(${(e.movementX || 0) * .4}deg)`; });
+      });
+      $("#aw-filters").addEventListener("click", e => {
+        const b = e.target.closest("[data-filter]");
+        if (!b) return;
+        $$("#aw-filters button").forEach(x => { x.classList.toggle("on", x === b); x.setAttribute("aria-pressed", String(x === b)); });
+        $$("#aw-grid .aw-card").forEach(card => { card.hidden = b.dataset.filter !== "All" && card.dataset.category !== b.dataset.filter; });
+      });
+
+      // Safe, deterministic loader — fixes the old random-progress loader that could feel inconsistent.
+      const loader = $("#loader"), bar = $("#loader-bar"), num = $("#loader-num");
+      let progress = 0;
+      const tick = () => {
+        progress = Math.min(100, progress + Math.ceil((100 - progress) * .13));
+        bar.style.width = progress + "%";
+        num.textContent = progress + "%";
+        if (progress < 100) requestAnimationFrame(tick);
+        else setTimeout(() => {
+          loader.classList.add("done");
+          setTimeout(() => document.body.classList.add("loaded"), 350);
+        }, 350);
+      };
+      // Don't hold the page hostage to the 15MB hero reel: start after load, or after 2.5s at most.
+      let loaderStarted = false;
+      const startLoader = () => { if (!loaderStarted) { loaderStarted = true; setTimeout(tick, 180); } };
+      window.addEventListener("load", startLoader, { once:true });
+      setTimeout(startLoader, 2500);
+
+      // Smooth scroll. Falls back to native scrolling if the CDN is unavailable.
+      const lenis = (window.Lenis && !reduceMotion) ? new Lenis({ lerp:.085, wheelMultiplier:1, touchMultiplier:1.2 }) : null;
+      const lockScroll = () => { document.body.classList.add("lock"); lenis && lenis.stop(); };
+      // Overlays can stack (All work → case study → contact), so only release when none are open.
+      const unlockScroll = () => {
+        if (document.querySelector(".case-modal.open, .work-modal.open, .modal.open, .mobile-menu.open")) return;
+        document.body.classList.remove("lock"); lenis && lenis.start();
+      };
+
+      // Year
+      $("#year").textContent = new Date().getFullYear();
+
+      // Navigation / scroll progress
+      const nav = $("#nav"), progressBar = $("#progress");
+      const onScroll = () => {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        progressBar.style.width = (max > 0 ? (scrollY / max) * 100 : 0) + "%";
+        nav.classList.toggle("scrolled", scrollY > 30);
+      };
+      addEventListener("scroll", onScroll, { passive:true });
+      onScroll();
+
+      // Smooth anchors
+      const mobileMenu = $("#mobile-menu"), menuBtn = $("#menu-btn");
+      const closeMenu = () => {
+        mobileMenu.classList.remove("open");
+        mobileMenu.setAttribute("aria-hidden","true");
+        menuBtn.setAttribute("aria-expanded","false");
+        unlockScroll();
+      };
+      const toggleMenu = () => {
+        const open = !mobileMenu.classList.contains("open");
+        mobileMenu.classList.toggle("open", open);
+        mobileMenu.setAttribute("aria-hidden", String(!open));
+        menuBtn.setAttribute("aria-expanded", String(open));
+        open ? lockScroll() : unlockScroll();
+      };
+      menuBtn.addEventListener("click", toggleMenu);
+      $$("#mobile-menu a").forEach(a => a.addEventListener("click", closeMenu));
+
+      $$('a[href^="#"]').forEach(a => a.addEventListener("click", e => {
+        const id = a.getAttribute("href");
+        if (!id || id === "#") return;
+        const target = $(id);
+        if (!target) return;
+        e.preventDefault();
+        closeMenu();
+        if (lenis) lenis.scrollTo(target, { duration:1.6 });
+        else target.scrollIntoView({ behavior:"smooth", block:"start" });
+      }));
+
+      // Split multi-line headings into masked lines that slide up on reveal.
+      $$(".title, .cta h2").forEach(el => {
+        el.innerHTML = el.innerHTML.split(/<br\s*\/?>/i)
+          .map((line, i) => `<span class="split-line" style="--l:${i}"><span>${line.trim()}</span></span>`).join("");
+      });
+
+      // Statement: words light up one by one as the section scrolls through.
+      const statementH = $(".statement h2");
+      let statementWords = [];
+      if (statementH) {
+        const wrap = (text, extra = "") => text.trim().split(/\s+/).map(w => `<span class="w${extra}">${w}</span>`).join(" ");
+        const [first, second] = [statementH.childNodes[0].textContent, $("span", statementH).textContent];
+        statementH.innerHTML = `${wrap(first)}<br>${wrap(second).replace(/>(care\.)</, ' data-hl>$1<')}`;
+        statementWords = $$(".w", statementH);
+        statementWords.forEach(w => { if (w.hasAttribute("data-hl")) w.classList.add("hl"); });
+      }
+
+      // Magnetic buttons.
+      if (finePointer && !reduceMotion) $$(".magnetic").forEach(btn => {
+        btn.addEventListener("pointermove", e => {
+          const r = btn.getBoundingClientRect();
+          btn.classList.add("pulling");
+          btn.style.translate = `${(e.clientX - r.left - r.width/2) * .3}px ${(e.clientY - r.top - r.height/2) * .4}px`;
+        });
+        btn.addEventListener("pointerleave", () => { btn.classList.remove("pulling"); btn.style.translate = ""; });
+      });
+
+      // Reveal observer
+      const revealObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold:.12, rootMargin:"0px 0px -50px 0px" });
+      $$(".reveal").forEach(el => revealObserver.observe(el));
+
+      // Cursor — desktop only; no cursor:none on mobile.
+      const cursor = $("#cursor");
+      if (matchMedia("(pointer:fine)").matches) {
+        cursor.style.display = "block";
+        let mx = innerWidth/2, my = innerHeight/2, cx = mx, cy = my;
+        addEventListener("pointermove", e => { mx=e.clientX; my=e.clientY; });
+        const cursorLoop = () => {
+          cx += (mx-cx)*.18; cy += (my-cy)*.18;
+          cursor.style.left = cx+"px"; cursor.style.top = cy+"px";
+          requestAnimationFrame(cursorLoop);
+        };
+        cursorLoop();
+
+        $$("[data-cursor]").forEach(el => {
+          el.addEventListener("mouseenter", () => {
+            cursor.dataset.label = el.dataset.cursor || "";
+            cursor.classList.add("active");
+          });
+          el.addEventListener("mouseleave", () => cursor.classList.remove("active"));
+        });
+      }
+
+      // Contact modal
+      const contact = $("#contact-modal");
+      const openContact = () => {
+        contact.classList.add("open");
+        contact.setAttribute("aria-hidden","false");
+        lockScroll();
+        $("#name").focus({ preventScroll:true });
+      };
+      const closeModal = modal => {
+        modal.classList.remove("open");
+        modal.setAttribute("aria-hidden","true");
+        unlockScroll();
+      };
+      $$(".js-contact").forEach(btn => btn.addEventListener("click", openContact));
+
+      // Immersive case-study engine (data: vidzn-projects.js).
+      const cases = Object.fromEntries(projects.map(p => [p.key, p]));
+
+      const caseModal=$("#case-modal");
+      const caseScroll=$(".case-scroll",caseModal);
+      let activeCase = projects[0]?.key;
+      const nextKey = key => projects[(projects.findIndex(p => p.key === key) + 1) % projects.length].key;
+      const section = (id, show) => { $(id).hidden = !show; };
+
+      const renderCase=(key, reset=true)=>{
+        const c = cases[key] || projects[0]; activeCase = c.key;
+        const n = projects.indexOf(c) + 1;
+        const set = (id, v) => { $(id).textContent = v || ""; };
+        set("#case-index", `${pad(n)} / SELECTED WORK`);
+        set("#case-title", c.title); set("#case-kicker", c.kicker); set("#case-intro", c.intro);
+        set("#case-heading", c.heading); set("#case-copy", c.copy);
+        set("#case-services", c.services); set("#case-output", c.output); set("#case-year", c.year);
+        set("#case-system-copy", c.system); set("#case-media-label", `CASE / ${pad(n)}`);
+
+        const live = $("#case-live");
+        live.hidden = !c.live; if (c.live) live.href = c.live;
+
+        // Hero: real image, or the branded placeholder until one exists.
+        const hero = c.hero || c.cover, img = $("#case-image"), ph = $("#case-ph");
+        img.hidden = !hero; ph.hidden = !!hero; $("#case-media-label").hidden = !hero;
+        if (hero) { img.src = hero; img.alt = `${c.title} project`; }
+        else { img.removeAttribute("src"); ph.style.setProperty("--c1", c.colors?.[0] || ""); ph.style.setProperty("--c2", c.colors?.[1] || ""); set("#case-ph-name", c.title); }
+
+        const gallery = c.gallery || [], feed = c.feed || [], stories = c.stories || [];
+        $("#case-mosaic").innerHTML = gallery.map((x,i)=>`<figure class="mosaic-item"><img src="${esc(x[0])}" alt="${esc(c.title)} ${esc(x[1])}" loading="${i?'lazy':'eager'}"><span class="mosaic-tag">${esc(x[1])}</span></figure>`).join("");
+        $("#case-feed").innerHTML = feed.map(x=>`<figure class="feed-card"><img src="${esc(x[0])}" alt="${esc(c.title)} ${esc(x[1])}" loading="lazy"><span class="feed-label">${esc(x[1])}</span></figure>`).join("");
+        $("#case-stories").innerHTML = stories.map(x=>`<figure class="phone"><img src="${esc(x[0])}" alt="${esc(c.title)} ${esc(x[1])}" loading="lazy"><span class="phone-ui">${esc(x[1])} / VIDZN</span></figure>`).join("");
+        set("#post-count", pad(feed.length));
+        set("#case-type", c.type); set("#case-image-note", c.imageNote); set("#case-motion", c.motion);
+        section("#case-showcase", gallery.length); section("#case-social", feed.length);
+        section("#case-stories-sec", stories.length); section("#case-detail", c.type || c.imageNote || c.motion);
+
+        $("#case-next-title").innerHTML = `${esc(cases[nextKey(c.key)].title)} <span>↗</span>`;
+        set("#case-counter", `${pad(n)} — ${pad(projects.length)}`);
+        if(reset) caseScroll.scrollTo({top:0,behavior:"instant"});
+      };
+
+      const openCase=(key, origin)=>{
+        // The case study wipes open as a circle from wherever it was clicked.
+        const alreadyOpen = caseModal.classList.contains("open");
+        if (origin && !alreadyOpen) {
+          caseModal.style.setProperty("--cx", origin.x + "px");
+          caseModal.style.setProperty("--cy", origin.y + "px");
+        }
+        renderCase(key,true);
+        caseModal.classList.add("open");
+        caseModal.setAttribute("aria-hidden","false");
+        lockScroll();
+      };
+      const closeCase=()=>{
+        caseModal.classList.remove("open");
+        caseModal.setAttribute("aria-hidden","true");
+        unlockScroll();
+      };
+
+      $$(".project, .aw-card, .client-row").forEach(card=>{
+        card.addEventListener("click",e=>openCase(card.dataset.project,{x:e.clientX,y:e.clientY}));
+        card.addEventListener("keydown",e=>{
+          if (e.key !== "Enter" && e.key !== " ") return;
+          e.preventDefault();
+          const r = card.getBoundingClientRect();
+          openCase(card.dataset.project,{x:r.left+r.width/2,y:r.top+r.height/2});
+        });
+      });
+      $(".case-close").addEventListener("click", e => {
+        e.preventDefault();
+        e.stopPropagation();
+        closeCase();
+      });
+      $("#next-case").addEventListener("click",()=>openCase(nextKey(activeCase)));
+      $("#case-next-title").addEventListener("click",()=>openCase(nextKey(activeCase)));
+
+      // All work overlay.
+      const workModal = $("#work-modal");
+      const openWork = () => {
+        workModal.classList.add("open"); workModal.setAttribute("aria-hidden","false"); lockScroll();
+        $(".work-modal-scroll").scrollTop = 0;
+        setTimeout(() => $("#aw-close").focus({ preventScroll:true }), 400);
+      };
+      const closeWork = () => { workModal.classList.remove("open"); workModal.setAttribute("aria-hidden","true"); unlockScroll(); $("#explore-work").focus({ preventScroll:true }); };
+      $("#explore-work").addEventListener("click", openWork);
+      $("#clients-all").addEventListener("click", openWork);
+      $("#aw-close").addEventListener("click", closeWork);
+      $("#aw-home").addEventListener("click", e => { e.preventDefault(); closeWork(); });
+
+      // Solution rows open the same contact flow with a contextual message.
+      $$(".solution").forEach(row => row.addEventListener("click", () => { window.location.href = "vidzn-services-inner-page.html#" + row.dataset.solution.replace("™","").toLowerCase(); }));
+
+      // Close controls — case studies use their own fullscreen modal engine.
+      $$("[data-close]").forEach(btn => btn.addEventListener("click", () => {
+        const id = btn.dataset.close;
+        if (id === "case-modal") closeCase();
+        else {
+          const modal = $("#" + id);
+          if (modal) closeModal(modal);
+        }
+      }));
+      $("#case-exit").addEventListener("click", e => {
+        e.preventDefault();
+        closeCase();
+      });
+      // The case study is an overlay on top of this same page (not a
+      // separate file), so "back to homepage" means: close the overlay and
+      // scroll the underlying page back to the top — never a real navigation.
+      const caseHome = $(".case-home");
+      if (caseHome) caseHome.addEventListener("click", e => {
+        e.preventDefault();
+        closeCase();
+        if (workModal.classList.contains("open")) closeWork();
+        const top = $("#top");
+        if (top) top.scrollIntoView({ behavior:"smooth", block:"start" });
+      });
+      [contact].forEach(modal => modal.addEventListener("click", e => {
+        if (e.target === modal) closeModal(modal);
+      }));
+      caseModal.addEventListener("click", e => {
+        if (e.target === caseModal || e.target.classList.contains("case-backdrop")) closeCase();
+      });
+      addEventListener("keydown", e => {
+        if (e.key !== "Escape") return;
+        // Close the top-most layer only: contact → case study → all work.
+        if ($(".modal.open")) { $$(".modal.open").forEach(closeModal); return; }
+        if (caseModal.classList.contains("open")) { closeCase(); return; }
+        if (workModal.classList.contains("open")) { closeWork(); return; }
+        closeMenu();
+      });
+
+      // Contact form → lead backend (endpoint lives in vidzn-config.js). The confirmation shows inside the
+      // modal (previously it was appended after the modal closed, so nobody saw it).
+      const form = $("#contact-form");
+      form.addEventListener("submit", async e => {
+        e.preventDefault();
+        const submitBtn = $('button[type="submit"]', form);
+        const data = new FormData(form);
+        const note = $(".form-success", form) || form.appendChild(document.createElement("div"));
+        note.className = "form-success";
+        note.setAttribute("role", "status");
+        note.style.cssText = "margin-top:28px;padding:18px 20px;border:1px solid rgba(183,255,60,.35);border-radius:14px;color:#b7ff3c;background:rgba(183,255,60,.05)";
+        submitBtn.disabled = true;
+        try {
+          await window.vidznSubmitLead({ ...Object.fromEntries(data.entries()), source: "home-contact" });
+          form.reset();
+          note.textContent = "Thanks — your inquiry is in. We'll be in touch soon.";
+          setTimeout(() => { closeModal(contact); note.remove(); }, 2600);
+        } catch (err) {
+          note.style.color = "#ff8a7a"; note.style.borderColor = "rgba(255,138,122,.4)";
+          note.textContent = "Something went wrong sending that. Please try again in a moment.";
+        } finally {
+          submitBtn.disabled = false;
+        }
+      });
+
+
+      // How a brand is born: one scroll value (0 → 4) drives the chapter list and builds the
+      // stage — spark → positioning rings → identity mark → touchpoint tiles → recognition.
+      const story = $("#story"), stage = $("#stage"), chapterList = $("#chapters");
+      const chapters = $$(".chapter", chapterList);
+      const st = sel => $$(sel, stage);
+      const stDot = $(".st-dot", stage), stMark = $(".st-mark", stage), stRings = st(".st-ring"), stAxes = st(".st-axis"), stTags = st(".st-tag");
+      const stKits = st(".st-kit"), stTiles = st(".st-tile"), stChart = $(".st-chart", stage), stSvg = $(".st-chart svg", stage), stArea = $("#st-area");
+      const stPhase = $("#st-phase"), stPct = $("#st-pct");
+      const PHASES = ["SPARK", "POSITION", "IDENTITY", "SYSTEM", "IMPACT"];
+      const clamp = (n,min,max) => Math.max(min,Math.min(max,n));
+      const lerp = (a,b,t) => a+(b-a)*t;
+      const ease = t => t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
+      let storyP = 0, storyChapter = -1;
+
+      const renderStory = () => {
+        if (!story) return;
+        const rect = story.getBoundingClientRect();
+        if (rect.bottom < -50 || rect.top > innerHeight + 50) return;
+        const raw = clamp(-rect.top / Math.max(1, story.offsetHeight - innerHeight), 0, 1);
+        const target = clamp(raw * 4.3, 0, 4);          // the last chapter holds for a beat
+        storyP = reduceMotion ? target : lerp(storyP, target, .12);
+        if (Math.abs(storyP - target) < .0005) storyP = target;
+        const p = storyP, S = stage.offsetWidth;
+        const seg = (a, b) => ease(clamp((p - a) / (b - a), 0, 1));
+
+        // Chapter list + progress rail
+        const idx = clamp(Math.round(p), 0, 4);
+        if (idx !== storyChapter) {
+          storyChapter = idx;
+          chapters.forEach((c, i) => { c.classList.toggle("on", i === idx); c.classList.toggle("done", i < idx); });
+          stPhase.textContent = PHASES[idx];
+        }
+        chapterList.style.setProperty("--prog", (p / 4).toFixed(4));
+        stPct.textContent = String(Math.round(p / 4 * 100)).padStart(2, "0") + "%";
+        story.style.setProperty("--glow", seg(3.3, 4).toFixed(3));
+
+        // 1 · Spark
+        const dotOut = seg(1.7, 2.1);
+        stDot.style.opacity = 1 - dotOut;
+        stDot.style.transform = `scale(${(1 + seg(.2, .9) * .5) * (1 - dotOut * .6)})`;
+
+        // 2 · Position — target rings, axes and the four questions
+        const posIn = seg(.45, 1.2), posOut = seg(1.6, 2.1), posVis = posIn * (1 - posOut);
+        stRings.forEach((r, i) => {
+          r.style.opacity = posVis;
+          r.style.transform = `scale(${.4 + .6 * posIn + .35 * posOut}) rotate(${(i - 1) * p * 22}deg)`;
+        });
+        stAxes.forEach((a, i) => { a.style.opacity = posVis; a.style.transform = i ? `scaleY(${posIn})` : `scaleX(${posIn})`; });
+        stTags.forEach((t, i) => {
+          const tin = seg(.7 + i * .08, 1.25 + i * .08);
+          t.style.opacity = tin * (1 - posOut);
+          t.style.transform = `scale(${.8 + .2 * tin})`;
+        });
+
+        // 3 · Identity — the dot becomes a mark, with its kit around it
+        const mkIn = seg(1.75, 2.3), mkOut = seg(2.65, 3.15);
+        stMark.style.opacity = mkIn * (1 - mkOut);
+        stMark.style.transform = `scale(${(.25 + .75 * mkIn) * (1 - .55 * mkOut)}) rotate(${(1 - mkIn) * -30}deg)`;
+        stKits.forEach((k, i) => {
+          const kin = seg(2 + i * .08, 2.45 + i * .08), kout = seg(2.55, 2.85);
+          k.style.opacity = kin * (1 - kout);
+          k.style.marginTop = k.classList.contains("swatch") ? `${S * .22 + (1 - kin) * 24}px` : "";
+        });
+
+        // 4 · System — the mark multiplies into touchpoints; 5 · Impact — they light up and lift
+        const lift = seg(3.3, 3.8);
+        stTiles.forEach((t, i) => {
+          const tin = seg(2.6 + i * .07, 3.15 + i * .07);
+          const col = i % 3, row = Math.floor(i / 3);
+          const x = (col - 1) * S * .325 * tin;
+          const y = ((row ? .155 : -.155) * S) * tin - lift * S * .13;
+          const sc = (.3 + .7 * tin) * (1 - .14 * lift);
+          t.style.opacity = tin;
+          t.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px) scale(${sc.toFixed(3)})`;
+          t.classList.toggle("lit", p > 3.45 + i * .08);
+        });
+        const chartIn = seg(3.35, 3.7);
+        stChart.style.opacity = chartIn;
+        stChart.style.transform = `translateY(${(1 - chartIn) * 20}px)`;
+        // Draw the line left → right by wiping the chart open.
+        stSvg.style.clipPath = `inset(-20% ${(100 - 100 * seg(3.4, 4)).toFixed(2)}% -20% 0)`;
+        stArea.style.opacity = .4 + .6 * seg(3.6, 4);
+      };
+
+      // Hero video: scroll scrubs the clip frame-by-frame across the tall
+      // .hero-video wrapper. The sticky pin releases naturally once progress
+      // hits 1, so the rest of the page picks up right where the video ends.
+      const heroVideoSection = $("#hero-video");
+      const heroVideo = $("#hero-video-el");
+      const heroVideoBar = $("#hero-video-progress-bar");
+      let heroVideoDuration = 0;
+      if (heroVideo) {
+        heroVideo.addEventListener("loadedmetadata", () => {
+          heroVideoDuration = isFinite(heroVideo.duration) ? heroVideo.duration : 0;
+        });
+        // Duration may already be available (cached video), covers that case.
+        if (heroVideo.readyState >= 1 && isFinite(heroVideo.duration)) heroVideoDuration = heroVideo.duration;
+      }
+      const heroCopy = $("#hero-copy"), heroCopyScrim = $("#hero-copy-scrim"), heroCue = $(".hero-scroll-cue");
+      let heroVideoSmooth = 0, heroSeeking = false, heroSeekAt = 0;
+      if (heroVideo) {
+        ["seeked","emptied","loadeddata"].forEach(ev => heroVideo.addEventListener(ev, () => { heroSeeking = false; }));
+        // Pull the whole reel into memory once, so scrubbing never waits on a network range request.
+        const src = matchMedia("(max-width:768px)").matches ? "vidzn-hero-reel-mobile.mp4?v=2" : "vidzn-hero-reel.mp4?v=2";
+        fetch(src).then(r => r.ok ? r.blob() : Promise.reject(r.status)).then(blob => {
+          const t = heroVideo.currentTime;
+          heroVideo.src = URL.createObjectURL(blob);
+          heroVideo.addEventListener("loadedmetadata", () => { heroVideo.currentTime = t; }, { once:true });
+        }).catch(() => { /* keep streaming the <source> version */ });
+      }
+      const renderHeroVideo = () => {
+        if (!heroVideoSection || !heroVideo) return;
+        const rect = heroVideoSection.getBoundingClientRect();
+        if (rect.bottom < 0) return;
+        const scrollable = Math.max(1, heroVideoSection.offsetHeight - innerHeight);
+        const progress = clamp(-rect.top / scrollable, 0, 1);
+
+        // Title card: the headline owns the first screen, then lifts away to hand over to the reel.
+        const copyOut = clamp(progress / .16, 0, 1);
+        if (heroCopy) {
+          heroCopy.style.opacity = 1 - copyOut;
+          heroCopy.style.transform = `translate3d(0,${-copyOut * 90}px,0) scale(${1 - copyOut * .05})`;
+          heroCopy.style.visibility = copyOut >= 1 ? "hidden" : "";
+        }
+        if (heroCopyScrim) heroCopyScrim.style.opacity = 1 - clamp(progress / .2, 0, 1);
+        if (heroCue) heroCue.style.opacity = 1 - copyOut;
+
+        // Ease toward the scroll target and only issue a new seek once the last one lands,
+        // which keeps scrubbing smooth instead of flooding the decoder.
+        if (heroVideoDuration > 0) {
+          const target = progress * heroVideoDuration;
+          heroVideoSmooth = lerp(heroVideoSmooth, target, .14);
+          if (Math.abs(target - heroVideoSmooth) < .01) heroVideoSmooth = target;
+          if (heroSeeking && performance.now() - heroSeekAt > 600) heroSeeking = false;
+          if (!heroSeeking && Math.abs(heroVideo.currentTime - heroVideoSmooth) > 1/60) {
+            heroSeeking = true; heroSeekAt = performance.now();
+            try {
+              if (heroVideo.fastSeek && Math.abs(heroVideo.currentTime - heroVideoSmooth) > 1.5) heroVideo.fastSeek(heroVideoSmooth);
+              else heroVideo.currentTime = heroVideoSmooth;
+            } catch (err) { heroSeeking = false; }
+          }
+        }
+        if (heroVideoBar) heroVideoBar.style.width = (progress * 100) + "%";
+      };
+
+      // Marquee: always drifting, speeds up and flips direction with scroll velocity.
+      const track = $(".marquee .track");
+      let marqueeX = 0, marqueeDir = -1, lastScrollY = scrollY, velocity = 0;
+      if (track && !reduceMotion) track.classList.add("js-driven");
+      const renderMarquee = () => {
+        const dy = scrollY - lastScrollY; lastScrollY = scrollY;
+        velocity = lerp(velocity, dy, .12);
+        if (Math.abs(dy) > .5) marqueeDir = dy > 0 ? -1 : 1;
+        if (!track || reduceMotion) return;
+        const half = track.scrollWidth / 2;
+        marqueeX += marqueeDir * (1.1 + Math.min(Math.abs(velocity) * .35, 18));
+        if (marqueeX <= -half) marqueeX += half;
+        if (marqueeX > 0) marqueeX -= half;
+        track.style.transform = `translate3d(${marqueeX}px,0,0) skewX(${clamp(-velocity * .25, -8, 8)}deg)`;
+      };
+
+      // Work images drift inside their frames.
+      const projectImgs = $$(".project-card img");
+      const renderProjects = () => {
+        projectImgs.forEach(img => {
+          const r = img.parentElement.getBoundingClientRect();
+          if (r.bottom < 0 || r.top > innerHeight) return;
+          const p = (r.top + r.height / 2 - innerHeight / 2) / innerHeight;
+          img.style.setProperty("--py", (p * -8).toFixed(2) + "%");
+        });
+      };
+
+      // Statement words light up as the section passes through the viewport.
+      const statementSection = $(".statement");
+      const renderStatement = () => {
+        if (!statementSection || !statementWords.length) return;
+        const r = statementSection.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > innerHeight) return;
+        const p = clamp((innerHeight * .85 - r.top) / (r.height * .9), 0, 1);
+        const lit = Math.round(p * statementWords.length);
+        statementWords.forEach((w, i) => w.classList.toggle("on", i < lit));
+      };
+
+      // One continuous loop — the story/video easing keeps settling after scrolling stops
+      // (previously they froze mid-transition because they only ran on scroll events).
+      const visualTick = (time) => {
+        if (lenis) lenis.raf(time);
+        renderStory();
+        renderHeroVideo();
+        renderMarquee();
+        if (!reduceMotion) renderProjects();
+        renderStatement();
+        requestAnimationFrame(visualTick);
+      };
+      requestAnimationFrame(visualTick);
+
+      $("#to-top").addEventListener("click", () => {
+        if (lenis) lenis.scrollTo(0, { duration: 2.2 });
+        else scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+      });
+      // Footer wordmark: VIDZN is sampled into dots, each tied home by a spring.
+      // The cursor pushes them away, a click/tap bursts them, and they wobble back into shape.
+      // Dots glow toward the accent the further they're displaced.
+      (() => {
+        const brand = $("#footer-brand"), canvas = brand && $("canvas", brand);
+        if (!canvas || !canvas.getContext) return;
+        const ctx = canvas.getContext("2d");
+        const footer = brand.closest("footer");
+        const PAD = 90, dpr = Math.min(devicePixelRatio || 1, 2);
+        const REST = [46, 46, 43], HOT = [183, 255, 60], LEVELS = 7;
+        const palette = Array.from({ length: LEVELS }, (_, i) => {
+          const t = i / (LEVELS - 1);
+          return `rgb(${REST.map((c, k) => Math.round(c + (HOT[k] - c) * t)).join(",")})`;
+        });
+        let pts = [], fs = 0, dot = 2, reach = 100, hotAt = 60, W = 0, H = 0;
+        let pointer = null, running = false, visible = false, introDone = false;
+
+        const build = () => {
+          const box = brand.getBoundingClientRect();
+          fs = parseFloat(getComputedStyle(brand).fontSize);
+          W = box.width + PAD * 2; H = box.height + PAD * 2;
+          canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+          // Draw the word offscreen letter by letter (matching the tight -0.09em tracking), then sample it.
+          const off = document.createElement("canvas");
+          off.width = Math.ceil(W); off.height = Math.ceil(H);
+          const o = off.getContext("2d");
+          o.font = `800 ${fs}px Manrope, system-ui, sans-serif`;
+          o.textBaseline = "alphabetic";
+          const m = o.measureText("VIDZN");
+          const ascent = m.actualBoundingBoxAscent || fs * .72;
+          let x = PAD;
+          const baseline = PAD + ascent;
+          o.fillStyle = "#fff";
+          for (const ch of "VIDZN") { o.fillText(ch, x, baseline); x += o.measureText(ch).width - fs * .09; }
+
+          const gap = Math.max(3, Math.round(fs / 36));
+          dot = gap * .42; reach = fs * .55; hotAt = fs * .22;
+          const data = o.getImageData(0, 0, off.width, off.height).data;
+          const old = pts; pts = [];
+          for (let y = 0; y < off.height; y += gap) for (let x2 = 0; x2 < off.width; x2 += gap) {
+            if (data[(y * off.width + x2) * 4 + 3] > 140) pts.push({ hx: x2, hy: y, x: x2, y, vx: 0, vy: 0 });
+          }
+          brand.classList.add("ready");
+          if (visible) intro();
+          draw(); wake();
+        };
+
+        const draw = () => {
+          ctx.clearRect(0, 0, W, H);
+          const buckets = Array.from({ length: LEVELS }, () => []);
+          for (const p of pts) {
+            const d = Math.hypot(p.x - p.hx, p.y - p.hy) + Math.hypot(p.vx, p.vy) * 2;
+            buckets[Math.min(LEVELS - 1, Math.floor(d / hotAt * (LEVELS - 1)))].push(p);
+          }
+          buckets.forEach((b, i) => {
+            if (!b.length) return;
+            ctx.fillStyle = palette[i];
+            ctx.beginPath();
+            const r = dot * (1 + i * .06);
+            for (const p of b) { ctx.moveTo(p.x + r, p.y); ctx.arc(p.x, p.y, r, 0, 6.2832); }
+            ctx.fill();
+          });
+        };
+
+        const step = () => {
+          let energy = 0;
+          const pr = reach * reach;
+          for (const p of pts) {
+            if (pointer) {
+              const dx = p.x - pointer.x, dy = p.y - pointer.y, d2 = dx * dx + dy * dy;
+              if (d2 < pr && d2 > .01) {
+                const d = Math.sqrt(d2), f = Math.pow(1 - d / reach, 2) * 5.5;
+                p.vx += dx / d * f; p.vy += dy / d * f;
+              }
+            }
+            p.vx += (p.hx - p.x) * .055; p.vy += (p.hy - p.y) * .055;   // spring home
+            p.vx *= .86; p.vy *= .86;                                   // damping
+            p.x += p.vx; p.y += p.vy;
+            energy += Math.abs(p.vx) + Math.abs(p.vy) + Math.abs(p.x - p.hx) * .02;
+          }
+          return energy / (pts.length || 1);
+        };
+
+        const loop = () => {
+          const e = step();
+          draw();
+          if (visible && (pointer || e > .02)) requestAnimationFrame(loop);
+          else { running = false; if (!pointer) { pts.forEach(p => { p.x = p.hx; p.y = p.hy; p.vx = p.vy = 0; }); draw(); } }
+        };
+        const intro = () => {
+          if (introDone || !pts.length || reduceMotion) return;
+          introDone = true;
+          pts.forEach(p => {
+            const a = Math.random() * 6.2832, d = fs * (.4 + Math.random() * 1.1);
+            p.x = p.hx + Math.cos(a) * d; p.y = p.hy + Math.sin(a) * d * .6;
+          });
+        };
+        const wake = () => { if (!running && visible && !reduceMotion) { running = true; requestAnimationFrame(loop); } };
+
+        const local = e => { const r = canvas.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; };
+        const burst = (at, power) => pts.forEach(p => {
+          const dx = p.x - at.x, dy = p.y - at.y, d = Math.hypot(dx, dy) || 1;
+          const f = power * (0.6 + Math.random() * .8) * Math.max(.15, 1 - d / (fs * 3));
+          p.vx += dx / d * f + (Math.random() - .5) * 4; p.vy += dy / d * f + (Math.random() - .5) * 4;
+        });
+
+        if (!reduceMotion) {
+          footer.addEventListener("pointermove", e => { pointer = local(e); brand.classList.add("played"); wake(); }, { passive:true });
+          footer.addEventListener("pointerleave", () => { pointer = null; });
+          footer.addEventListener("pointercancel", () => { pointer = null; });
+          footer.addEventListener("pointerdown", e => {
+            const at = local(e);
+            if (at.y < 0 || at.y > H) return;           // only near the word, not the links row below
+            brand.classList.add("played"); burst(at, fs * .16); wake();
+            if (e.pointerType !== "mouse") setTimeout(() => { pointer = null; }, 60);
+          });
+        }
+
+        // First time the footer scrolls into view, the dots fly in from a scatter and settle into the word.
+        new IntersectionObserver(([entry]) => {
+          visible = entry.isIntersecting;
+          if (visible) intro();
+          wake();
+        }, { threshold:.2 }).observe(brand);
+
+        let resizeTimer;
+        new ResizeObserver(() => { clearTimeout(resizeTimer); resizeTimer = setTimeout(build, 120); }).observe(brand);
+        (document.fonts ? document.fonts.load(`800 100px Manrope`).catch(() => {}) : Promise.resolve()).then(build);
+      })();
+
+      // Small parallax on hero orbs, disabled for reduced-motion users.
+      if (!matchMedia("(prefers-reduced-motion:reduce)").matches) {
+        addEventListener("pointermove", e => {
+          const x = (e.clientX / innerWidth - .5) * 24;
+          const y = (e.clientY / innerHeight - .5) * 24;
+          $(".orb.a").style.transform = `translate(${x}px,${y}px)`;
+          $(".orb.b").style.transform = `translate(${-x}px,${-y}px)`;
+        }, { passive:true });
+      }
+    })();
+  </script>
+</body>
+</html>
